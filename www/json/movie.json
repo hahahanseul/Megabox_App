@@ -1,0 +1,40 @@
+[{
+  "movie_title":"매트릭스",
+  "director":"워쇼스키자매",
+  "actor":"키아누리브스",
+  "genre":"SF,액션",
+  "filmrate":"50%",
+  "contents":"인간의 기억마저 AI에 입력되고 삭제되는 세상.",
+  "start_day":"10/12",
+  "end_day":"11/30",
+  "runningtime":"136min",
+  "score":"9.7",
+  "poster":"http://thebitplayers.net/wp-content/uploads/2015/08/the-matrix-movie-poster.jpg"
+},
+  {
+    "movie_title":"인셉션",
+    "director":"크리스토퍼 놀란",
+    "actor":"레오나르도 디카프리오",
+    "genre":"액션,모험,SF",
+    "filmrate":"32%",
+    "contents":"드림머신이라는 기계로 타인의 꿈과 접속해 생각을 빼낼 수 있는  미래사회",
+    "start_day":"10/12",
+    "end_day":"10/22",
+    "runningtime":"147분",
+    "score":"9.21",
+    "poster":"http://cdn.collider.com/wp-content/uploads/inception_poster_alternate-405x600.jpg"
+  },
+  {
+    "movie_title":"소셜네트워크",
+    "director":"데이빗 핀처",
+    "actor":"",
+    "genre":"드라마",
+    "filmrate":"9.0%",
+    "contents":"5억명의 온라인친구, 전세계 최연소 억만장자, 하버드 천재가 창조한 소셜 네트워크 혁명",
+    "start_day":"10/12",
+    "end_day":"11/30",
+    "runningtime":"120min",
+    "score":"7.80",
+    "poster":"http://www.incontention.com/wp-content/uploads/2010/06/soci.gif"
+  }
+]

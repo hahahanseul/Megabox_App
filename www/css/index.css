@@ -1,0 +1,838 @@
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    font-family: 'Spoqa Han Sans', 'Sans-serif';
+}
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    background-color:white;
+ /*   background-image:linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-webkit-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);
+    background-image:-ms-linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);*/
+    background-image:-webkit-gradient(
+        linear,
+        left top,
+        left bottom
+    /*    color-stop(0, #A7A7A7),
+        color-stop(0.51, #E4E4E4)*/
+    );
+    background-attachment:fixed;
+    font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+    font-size:12px;
+    height:100%;
+    margin:0px;
+    padding:0px;
+    text-transform:uppercase;
+    width:100%;
+}
+
+/* Portrait layout (default) */
+.app {
+    background:url(https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif) no-repeat center top; /* 170px x 200px */
+    position:absolute;             /* position in the center of the screen */
+    left:50%;
+    top:50%;
+    height:50px;                   /* text area height */
+    width:225px;                   /* text area width */
+    text-align:center;
+    padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
+    margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
+                                   /* offset horizontal: half of text area width */
+}
+
+/* Landscape layout (with min-width) */
+@media screen and (min-aspect-ratio: 1/1) and (min-width:400px) {
+    .app {
+        background-position:left center;
+        padding:75px 0px 75px 170px;  /* padding-top + padding-bottom + text area = image height */
+        margin:-90px 0px 0px -198px;  /* offset vertical: half of image height */
+                                      /* offset horizontal: half of image width and text area width */
+    }
+}
+
+h1 {
+    font-size:24px;
+    font-weight:normal;
+    margin:0px;
+    overflow:visible;
+    padding:0px;
+    text-align:center;
+}
+
+.event {
+    border-radius:4px;
+    -webkit-border-radius:4px;
+    color:#FFFFFF;
+    font-size:12px;
+    margin:0px 30px;
+    padding:2px 0px;
+}
+
+.event.listening {
+    background-color:#333333;
+    display:block;
+}
+
+.event.received {
+    background-color:#4B946A;
+    display:none;
+}
+
+@keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+ 
+@-webkit-keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.4; }
+    to { opacity: 1.0; }
+}
+ 
+.blink {
+    animation:fade 3000ms infinite;
+    -webkit-animation:fade 3000ms infinite;
+}
+ul{
+    list-style: none;
+    padding:0;
+    margin:0;
+}
+/*common*/
+#wrapper {
+    width:100%;
+    height:100%;
+    position:relative;
+    background-color:white;
+}
+
+/*header*/
+header {
+    width:100%;
+    height:44px;
+    background-color:#fff;
+    border-bottom:solid 1px #ccc;
+}
+#header-box {
+    position :relative;
+}
+#header-left{
+    position:absolute;
+    top:10px;
+    left:15px;
+}
+#header-title{
+    position:absolute;
+    top:15px;
+    left:40%;
+    font-size:15px;
+    font-weight:bold;
+}
+#header-right{
+    position:absolute;
+    top:10px;
+    right:15px;
+}
+/*main*/
+.menu-btn>i {
+    font-size:25px;
+}
+#movie-list{
+    display:none;
+    position:absolute;
+    width:100%;
+    top:44px;
+    left:0;
+    background-color:white;
+}
+#movie-list>ul{
+    width:100%;
+}
+#movie-list>ul>li{
+    width:100%;
+    text-align:center;
+    padding:15px;
+    font-size:14px;
+    margin: 0;
+    border-bottom:1px solid #ccc;
+}
+.select-btn {
+    font-size:14px;
+    font-weight:bold;
+    margin-left:7px;
+}
+#select-btn>i{
+    font-size:14px;
+    font-weight:bold;
+    margin-left:7px;
+}
+/*reservation*/
+.back-btn>i {
+    font-size:25px;
+}
+/*member*/
+.member-container{
+    position:relative;
+    width:85%;
+    height:70%;
+    margin:0 auto;
+    padding:40% 0;
+}
+.member-content{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:100%;
+    height:100%;
+    padding-top:50%;
+}
+#main-img{
+    width:80%;
+    height:45px;
+    background-image:url(http://artspace.godohosting.com/wp-content/uploads/2017/03/%ED%8F%AC%EB%A7%B7%EB%B3%80%ED%99%98_%EB%A9%94%EA%B0%80%EB%B0%95%EC%8A%A4%EB%A1%9C%EA%B3%A0.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x:50%;
+    background-position-y:50%;
+    margin:10px auto 30px auto;
+}
+#id,#password{
+    width:100%;
+    height:40px;
+    border:solid 1px #ccc;
+    padding:0px 15px;
+}
+#id{
+    margin:30px 0px 10px 0px;
+}
+#password{
+    margin:10px 0px 20px 0px;
+}
+#signin-btn,#signup-btn{
+    width:100%;
+    height:40px;
+}
+#signin-btn{
+    margin-bottom:10px;
+}
+
+/*main*/
+.main-container{
+    width:80%;
+    height:calc(100% - 44px);
+    padding:40px 0px;
+    margin:0 auto;
+    /*           'background-image':'url(http://thebitplayers.net/wp-content/uploads/2015/08/the-matrix-movie-poster.jpg)',
+               'filter':'blur(5px)',
+               '-webkit-filter':'blur(5px)',
+               'background-size': 'cover'*/
+}
+#img-box{
+    width: 100%;
+    height:400px;
+    background-size: cover;
+    background-image:url(http://thebitplayers.net/wp-content/uploads/2015/08/the-matrix-movie-poster.jpg);
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: 50%;
+}
+#rsrv-btn {
+    width: 30%;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    margin: 0 auto;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px;
+}
+#movie-info{
+    text-align:center;
+    margin:20px 0;
+}
+#border{
+    width:60%;
+    margin:5px auto;
+    border-bottom: solid 1px #ccc
+}
+#details{
+    width: 60%;
+    margin:10px auto;
+}
+#details>div{
+    display:inline-block;
+    text-align:center;
+    width:49.5%;
+}
+#rate{
+    border-right:1px solid #ccc;
+}
+/*Reservation*/
+.rsrv-container{
+    width: 100%;
+    height:calc(100% - 44px);
+}
+.rsrv-content{
+    height:100%;
+}
+#option-box>ul{
+    width:100%;
+    height:150px;
+    margin:0;
+}
+#option-box>ul>li{
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    width:33.3%;
+    height:150px;
+    color:white;
+    border-right:1px solid #fff;
+    background-color: rgba(89, 89, 89, 0.55);
+}
+#option-box>ul>li:first-child{
+    background-size: cover;
+/*    background-image:url(http://thebitplayers.net/wp-content/uploads/2015/08/the-matrix-movie-poster.jpg);*/
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: 50%;
+}
+#option-box>ul>li:last-child{
+    border-right:none;
+}
+.tag{
+    width: 50px;
+    height: 20px;
+    line-height: 20px;
+    vertical-align: middle;
+    position: absolute;
+    top:0;
+    left:10px;
+    font-size: 11px;
+    border-radius: 5px;
+    background-color: rgba(89, 89, 89, 0.29);
+}
+.option-title{
+    width:100%;
+    position:absolute;
+    top:0;
+    left:0;
+    line-height:150px;
+    vertical-align: middle;
+    font-size:16px;
+}
+.close-btn>i{
+    font-size:25px;
+    color: #503396;
+}
+.finish-btn{
+    color:#ccc;
+    border:1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px;
+    font-size: 10px;
+}
+/*theater*/
+.theater-container{
+    width: 100%;
+    height:calc(100% - 44px);
+}
+.theater-content{
+    height:100%;
+}
+#category-box{
+    width:100%;
+}
+#category-box>ul{
+    text-align: center;
+    width:100%;
+    background-color:#f7f7f7;
+    margin:0;
+}
+#category-box>ul>li{
+    display: inline-block;
+width: 49.9%;
+height: 40px;
+line-height: 40px;
+font-weight:bold;
+}
+#category-box>ul>li.active{
+    border-bottom: 2px solid #503396;
+    color: #503396;
+}
+#region-box{
+    position:relative;
+    width:100%;
+}
+#region-box>div{
+    display: inline-block;
+    width:50%;
+    background-color: white;
+}
+#region-city{
+    position:absolute;
+    top:0;
+    left:0;
+    border-right:1px solid #ccc;
+}
+#region-city>ul{
+    width:100%;
+    margin:0;
+}
+#region-city>ul>li{
+    display: inline-block;
+    padding:10px 15px;
+    width: 100%;
+    height: 40px;
+    line-height: 20px;
+    font-weight:bold;
+    border-bottom:1px solid #ccc;
+}
+#region-city>ul>li.active{
+    background-color: #f7f7f7;
+}
+#region-town{
+    position:absolute;
+    top:0;
+    right:0;
+}
+#region-town>ul{
+    width:100%;
+    margin:0;
+}
+#region-town>ul>li{
+    display: inline-block;
+    padding:10px 15px;
+    width: 100%;
+    height: 40px;
+    line-height: 20px;
+    border-bottom:1px solid #ccc;
+    border-left:1px solid #ccc;
+}
+#region-town>ul>li.active{
+    color: #fff;
+    background-color:  #503396;
+}
+/*date*/
+.layer-darker{
+    position: absolute;
+    width: 66.6%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.layer-dark{
+    background-color:rgba(0, 0, 0, 0.2) !important;
+}
+.option-title.date.lheight-none{
+    line-height:0;
+    top:50%;
+    transform: translateY(-50%);
+}
+.date-content{
+    position:relative;
+}
+#datepicker{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 33.5%;
+    height: 100%;
+    padding-top:150px;
+}
+#date-txt-box{
+    position:absolute;
+    height:100%;
+    width:100%;
+    font-color:white;
+    text-align: center;
+}
+.small-font{
+    font-size: 13px;
+    margin-bottom:20px;
+}
+.big-font{
+    font-size:16px;
+}
+#datepicker>ul{
+    text-align: center;
+    width:100%;
+    background-color:white;
+    margin:0;
+}
+#datepicker>ul>li{
+    padding:3px 0px;
+    width: 100%;
+    height: 44px;
+    border-bottom:1px solid #ccc;
+}
+.year-txt {
+    font-size:12px;
+    margin:0;
+}
+.month-txt {
+    font-size:18px;
+    font-weight:bold;
+    margin:0;
+}
+.day-txt{
+    margin-right: 5px;
+    line-height: 44px;
+    font-size:16px;
+}
+.date-txt{
+    font-size:15px;
+}
+#date-notice {
+    position: absolute;
+    top: 170px;
+    right: 40%;
+    color: white;
+    width: 90px;
+    height: 50%;
+    text-align: right;
+}
+#date-notice>i{
+    font-size:30px;
+    margin:10px;
+}
+.notice-txt {
+    font-size:10px;
+}
+#selected-options{
+    width:100%;
+    height:calc(100% - 150px);
+}
+#selected-theater{
+    width: 100%;
+    height: 40px;
+    padding: 0 40px;
+    line-height: 40px;
+    font-size: 18px;
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+#timetable-box{
+    width:93%;
+    margin:0 auto;
+}
+.screen-box{
+    padding : 5px 0;
+}
+.screen-num{
+    margin-right:5px;
+    font-size:14px;
+}
+.total-seats {
+    font-size: 12px;
+    color: #999;
+}
+.schedule-box{
+    width:100%;
+    height:100%;
+}
+.schedule-box>ul{
+    margin: 0;
+    width:100%;
+}
+.schedule-box>ul>li{
+    display: inline-block;
+    width:25%;
+    height:65px;
+    vertical-align: top;
+    padding: 5px 0;
+    border:1px solid #cccccc;
+}
+/*.schedule-box>ul>li:last-child{
+    border-right:none;
+}*/
+.schedule-box>ul>li>div{
+    width:100%;
+    text-align: center;
+    font-size: 12px;
+}
+.bTime{
+    font-size:15px !important;
+}
+.eTime{
+    color: #ccc;
+}
+.aSeat{
+    color:#503396;
+}
+
+/*seat*/
+.seat-container{
+    width: 100%;
+    height:calc(100% - 44px);
+}
+.seat-content{
+    position:relative;
+    width:100%;
+    height: 100%;
+    padding-bottom :70px;
+    background-color: #bfbfbf;
+}
+#seat-box{
+    width:100%;
+    height:100%;
+}
+#screen{
+    width:100%;
+    padding:15px 0;
+    color: #dddddd;
+    text-align: center;
+    font-size:25px;
+    letter-spacing: 10px;
+}
+#seats{
+    width:100%;
+    height:100%;
+    padding: 30px 20px 100px 20px;
+    border:1px solid #ccc;
+    border-top:none !important;
+}
+#seats>ul{
+    width: 100%;
+    margin:0;
+    border-bottom:1px solid #ccc;
+}
+#row10 {
+    border-bottom:none;
+}
+#seats>ul>li{
+    display: inline-block;
+    vertical-align: top;
+    width:12.5%;
+    height:40px;
+    color: #949494;
+    border-right: 1px solid #949494;
+    text-align: center;
+    line-height: 40px;
+    background-color: white;
+}
+#seats>ul>li.active{
+    background-color: #503396;
+    color: white;
+}
+#seats>ul>li:last-child{
+    border-right:none;
+}
+footer{
+    position: absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:70px;
+}
+#seat-desc{
+    width:100%;
+    height:45%;
+    background-color: white;
+}
+#seat-desc>ul{
+    margin:0;
+    padding: 7px 10px;
+}
+#seat-desc>ul>li {
+    display: inline-block;
+    vertical-align: top;
+    width:25%;
+    height:100%;
+}
+#seat-desc>ul>li>div{
+    display: inline-block;
+    vertical-align: top;
+}
+.seat-icon {
+    width: 17px;
+    height:17px;
+    border: 1px solid #000;
+    margin-right:5px;
+}
+.seat-text{
+    font-size:13px;
+}
+.reserved-desc .seat-icon{
+    background:
+            linear-gradient(to top left,
+            rgba(0,0,0,0) 0%,
+            rgba(0,0,0,0) calc(50% - 0.8px),
+            rgba(0,0,0,1) 50%,
+            rgba(0,0,0,0) calc(50% + 0.8px),
+            rgba(0,0,0,0) 100%),
+            linear-gradient(to top right,
+            rgba(0,0,0,0) 0%,
+            rgba(0,0,0,0) calc(50% - 0.8px),
+            rgba(0,0,0,1) 50%,
+            rgba(0,0,0,0) calc(50% + 0.8px),
+            rgba(0,0,0,0) 100%);
+
+}
+.selected-desc .seat-icon{
+    background-color: #503396;
+}
+#footer-box{
+    width:100%;
+    height: 55%;
+}
+#footer-box>div{
+    display: inline-block;
+    vertical-align: top;
+}
+#price{
+    width: 60%;
+    height: 100%;
+    padding: 10px;
+    background-color: #f5f5f5;
+}
+.price-text1,.price-text3{
+    color: #949494;
+    font-size:12px;
+}
+.price-text2 {
+    padding-right:5px;
+    padding-left:20px;
+    font-size:14px;
+}
+#confirm-btn{
+    width: 40%;
+    height: 100%;
+    padding: 7px 10px;
+    background-color: #503396;
+    color:white;
+    font-size: 17px;
+    text-align: center;
+}
+#confirm-btn>i{
+    margin-right:3px;
+}
+/*payment*/
+.payment-container{
+    width: 100%;
+    height:calc(100% - 44px);
+}
+.payment-content{
+    position:relative;
+    width:100%;
+    height: 100%;
+}
+#selected-box{
+    width:100%;
+    padding: 15px 15px;
+    background-color: rgba(43, 43, 43, 0.91);
+    height: 30%;
+}
+#movie-title{
+    color: white;
+    font-size:18px;
+    margin-bottom: 10px;
+}
+#movie-details{
+    width:100%;
+}
+#movie-details>div{
+    padding: 10px 0px;
+    display: inline-block;
+    vertical-align: top;
+}
+#movie-poster{
+    width:25%;
+    height: 100px;
+    margin-right:25px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x:50%;
+    background-position-y:50%;
+
+}
+#detail-info>ul{
+    list-style: square;
+}
+
+#detail-info>ul>li{
+    font-weight:lighter;
+    color: white;
+}
+#payment-form{
+    width:100%;
+    height:70%;
+    padding: 30px 15px;
+}
+#payment-title {
+    width: 100%;
+    background-color: #503396;
+    font-size: 16px;
+    color: #fff;
+    font-weight:100;
+    padding: 10px;
+    text-align: center;
+}
+#payment-content{
+    width:100%;
+    padding: 20px;
+}
+#input-box{
+    margin-bottom:20px;
+}
+#name-box{
+    width:85%;
+    margin: 0 auto 10px auto;
+}
+#price-box{
+    width: 85%;
+    margin:0 auto;
+}
+.payment-txt{
+    font-size: 14px;
+    margin-right:15px;
+}
+#pay-name,#pay-price {
+    border:1px solid #ccc;
+    padding: 2px 10px;
+    font-size: 12px;
+}
+#payment-btn {
+    background-color: #503396;
+    color: white;
+    font-size: 15px;
+    width: 30%;
+    padding: 10px 0;
+    margin: 0 auto;
+    text-align: center;
+}
+#payment-notice{
+    width:100%;
+    border: 1px solid #ccc;
+    padding: 10px 10px;
+}
+#payment-notice>p{
+    margin: 0 0 5px 0;
+    font-size: 15px;
+    color: #503396;
+    font-weight: bold;
+}
+/*complete*/
+.complete-content{
+    width: 100%;
+    text-align: center;
+    height: 100%;
+    padding: 55% 0;
+}
+#complete-msg{
+    width:100%;
+    font-size:18px;
+    margin-bottom:15px;
+}
+#go-main-btn{
+    width:40%;
+    margin:0 auto;
+    padding: 10px;
+    background-color: #503396;
+    color:white;
+    font-size:15px;
+}
