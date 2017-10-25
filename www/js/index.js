@@ -58,14 +58,15 @@ app.member=(function () {
     };
     var setContentView =function () {
         $('body').html(app.compUI.div('wrapper'));
-        app.template.body('member-container','member-content');
-        $('#content').append(app.compUI.div('main-img'));
-        $('#content').append(app.compUI.input('id','text'));
-        $('#id').attr('placeholder','ID를 입력하세요').attr('data-role','none');
-        $('#content').append(app.compUI.input('password','password'));
-        $('#password').attr('placeholder','비밀번호를 입력하세요').attr('data-role','none');
-        $('#content').append(app.compUI.btn('signin-btn'));
-        $('#content').append(app.compUI.btn('signup-btn'));
+        $('#wrapper').append(app.compUI.divC('member-container'));
+        $('.member-container').append(app.compUI.divC('member-content'));
+        $('.member-content').append(app.compUI.div('main-img'));
+        $('.member-content').append(app.compUI.input('id','text'));
+        $('#id').attr('placeholder','ID를 입력하세요').attr('data-role','none').val('hong');
+        $('.member-content').append(app.compUI.input('password','password'));
+        $('#password').attr('placeholder','비밀번호를 입력하세요').attr('data-role','none').val('1');
+        $('.member-content').append(app.compUI.btn('signin-btn'));
+        $('.member-content').append(app.compUI.btn('signup-btn'));
         $('#signin-btn').text('로그인').addClass('btn btn-default');
         $('#signup-btn').text('회원가입').addClass('btn btn-default');
     };
@@ -81,311 +82,230 @@ app.main = (function () {
         $('#header-title').click(e=>{
             e.preventDefault();
             $('#movie-list').empty();
-            $('#wrapper').addClass('layer-dark');
+            $('#wrapper').toggleClass('layer-dark');
             $('#wrapper').append(app.compUI.div('movie-list'));
             $('#movie-list').append(app.compUI.ul());
-            $.ajax({
-                async : false,
-                url:'json/movie.json',
-                type: 'post',
-                dataType:'json',
-                success:d=>{
-                    var movieListHTML='';
-                    var arr=d;
-                    $.each(arr,(i,o)=>{
-                        movieListHTML+='<li id="movie0'+(i+1)+'">'+o.movie_title+'</li>';
-                    });
-                    $('#movie-list>ul').append(movieListHTML);
-                    $('#movie-list').toggle();
-                    $('#header-title>i').toggleClass('fa-angle-double-down fa-angle-double-up');
-                    $('#movie01').click(e=>{
-                        e.preventDefault();
-                        onCreate();
-                        var selectedMovie=$('#title').text();
-                        app.session.init('movie',selectedMovie);
-                    });
-                    $('#movie02').click(e=>{
-                        e.preventDefault();
-                        onCreate();
-                        var selectedMovie='';
-                        var url = 'url('+arr[1].poster +')';
-                        $('#img-box').removeAttr('background-image');
-                        $('#img-box').css({'background-image':url});
-                        $('#title').text(arr[1].movie_title);
-                        $('#rate').text(arr[1].score);
-                        $('#genre').text(arr[1].genre);
-                        var selectedMovie=$('#title').text();
-                        app.session.init('movie',selectedMovie);
-                    });
-                    $('#movie03').click(e=>{
-                        e.preventDefault();
-                        onCreate();
-                        var selectedMovie='';
-                        var url = 'url('+arr[2].poster +')';
-                        $('#img-box').removeAttr('background-image');
-                        $('#img-box').css({'background-image':url});
-                        $('#title').text(arr[2].movie_title);
-                        $('#rate').text(arr[2].score);
-                        $('#genre').text(arr[2].genre);
-                        var selectedMovie=$('#title').text();
-                        app.session.init('movie',selectedMovie);
-                    });
-                },
-                error:e=>{
-                    alert('error');
-                }
+            app.ajaxList.movie();
+            $('#movie-list').toggle();
+            $('#header-title>i').toggleClass('fa-angle-double-down fa-angle-double-up');
+            // $('#wrapper').toggleClass('layer-dark');
+            $('#movie-list>ul>li').on('click',function (e) {
+                e.preventDefault();
+                var movie = $(this).attr('id');
+                var  selectedMovie = $('#'+movie).text();
+                app.session.init('movie', selectedMovie);
+                onCreate();
+                app.ajaxList.main(selectedMovie);
             });
+            $('#rsrv-btn').addClass('movie-select');
         });
     };
     var setContentView = function () {
         $('body').html(app.compUI.div('wrapper'));
         app.template.header();
-        app.template.body('main-container','main-content');
+        $('#wrapper').append(app.compUI.divC('main-container'));
+        $('.main-container').append(app.compUI.divC('main-content'));
         $('#header-left').addClass('menu-btn');
         $('.menu-btn').append(app.compUI.i('fa fa-bars'));
         $('#header-box>span>i').attr('aria-hidden','true');
         $('#header-title').addClass('select-btn');
         $('.select-btn').text('영화선택 ').append(app.compUI.i('fa fa-angle-double-down'));
-         $('#content').html(app.compUI.div('img-box'));
-         $('#content').append(app.compUI.div('movie-info'));
+         $('.main-content').html(app.compUI.div('img-box'));
+         $('.main-content').append(app.compUI.div('movie-info'));
          $('#movie-info').append(app.compUI.div('title'));
          $('#movie-info').append(app.compUI.div('border'));
          $('#movie-info').append(app.compUI.div('details'));
          $('#details').append(app.compUI.div('rate'));
          $('#details').append(app.compUI.div('genre'));
-         $('#content').append(app.compUI.div('rsrv-btn'));
-         $('#rate').text('9.7');
-         $('#title').text('매트릭스');
-         $('#genre').text('SF,액션');
+         $('#title').text('토르:라그나로크');
+         $('#rate').text('130분');
+         $('#genre').text('SF, 액션, 판타지');
+         $('#img-box').css('background-image','url(http://www.joblo.com/posters/images/full/Thor-Ragnarok-international-poster-1-large.jpg)')
+         $('.main-content').append(app.compUI.div('rsrv-btn'));
          $('#rsrv-btn').text('예매하기');
-        var selectedMovie=$('#title').text();
-        app.session.init('movie',selectedMovie);
     };
     return {onCreate:onCreate};
 })();
 app.reservation =(function () {
     var onCreate =function () {
         setContentView();
-        $('.option-title.theater').click(e=>{
-            e.preventDefault();
-            app.theater.onCreate();
-        });
-        $('#header-left').click(e=>{
-           // alert('app.reservation>뒤로가기');
+        var movieImg=app.session.getSessionData('img');
+        $('#option-box>ul>li:first-child').css({'background-image':'url('+movieImg+')'});
+        $('.go-main-btn1').click(e=>{
             app.main.onCreate();
         });
-        $('.option-title.date').click(e=>{
-            // alert('영화관을 먼저 선택해주세요.');
-    });
-    }
-    var setContentView = function () {
-        var selectedMovie= app.session.getSessionData('movie');
-        app.template.reservFixed();
-        $('#option-box>ul>li:first-child').css({'background-image':app.session.movie(selectedMovie)});
-        $('#content').append(app.compUI.div('selected-option-box'));
-    };
-    return {onCreate:onCreate};
-})();
-app.theater=(function () {
-    var onCreate=function () {
-        setContentView();
-        $('#header-left').click(e=>{
-            //alert('app.theater>뒤로가기');
-            app.reservation.onCreate();
-        });
-        $('#header-right').click(e=>{
-            //alert('app.theater>영화관 선택완료!');
-            app.date.onCreate();
-        });
-    };
-    var setContentView =function () {
-        app.template.theater();
-        $.ajax({
-            async : false,
-            url:'json/office.json',
-            type: 'post',
-            dataType:'json',
-            success:d=>{
-                var townListHTML='';
-                var arr=d;
-                $.each(arr,(i,o)=>{
-                    townListHTML+='<li id="town0'+(i+1)+'">'+o.officename+'</li>';
-                });
-                $('#region-town>ul').append(townListHTML);
-                $('#region-town>ul>li').on('click',function (e) {
-                    e.preventDefault();
-                    var theater = $(this).attr('id');
-                    var theaterName= $('#'+theater).text();
-                    app.session.init('theater',theaterName);
-                    if($(this).hasClass('active')){
-                        $(this).removeClass('active');
-                    }
-                    else{
-                        $(this).addClass('active');
-                    }
-                    $('.finish-btn').css({'color':'#503396','border':'1px solid #503396'});
+        $('.option-title.theater').click(e=>{
+            e.preventDefault();
+            $('.rsrv-header, .rsrv-content').hide();
+            $('header').addClass('theater-header');
+            $('#header-left').addClass('close-btn');
+            $('.close-btn').append(app.compUI.i('fa fa-times'));
+            $('#header-left>i').removeClass('fa-angle-left');
+            $('#header-box>span>i').attr('aria-hidden','true');
+            $('#header-title').addClass('header-title-txt2');
+            $('.header-title-txt2').text('영화관 선택');
+            $('#header-right').addClass('finish-btn');
+            $('.finish-btn').text('선택완료');
+            $('.theater-header,.theater-content').show();
+            $('#region-town>ul>li').on('click',function (e) {
+                e.preventDefault();
+                var theater = $(this).attr('id');
+                var theaterName = $('#'+theater).text();
+                app.session.init('theater', theaterName);
+                $(this).parent("ul").find("li").removeClass("active");
+                $(this).addClass("active");
+                if($('#region-town>ul>li').hasClass("active")){
+                    $('.finish-btn').addClass('active');
                     $('.finish-btn').click(e=>{
                         e.preventDefault();
-                            app.date.onCreate();
-                            var selectedTheater =app.session.getSessionData('theater');
-                            $('.option-title.theater').text(selectedTheater);
+                        $('.theater-header, .theater-content').hide();
+                        app.reservation.onCreate();
+                        $('.option-title.date').addClass('date-select');
+                        $('.option-title.theater').text(app.session.getSessionData('theater'));
+                        var date = app.dateCalc.today();
+                        //date =[년/월/일/요일] 순으로 들어있음요
+                        var thisYear = app.session.init('thisYear',date[0]);
+                        var thisMonth = app.session.init('thisMonth',date[1]);
+                        $('.option-title.date').addClass('lheight-none');
+                        $('.option-title.date.lheight-none').html(app.compUI.p('small-font'));
+                        $('.small-font').text('오늘');
+                        $('.option-title.date').append(app.compUI.p('big-font'));
+                        $('.big-font').text(date[1]+'월 '+date[2]+'일('+date[3]+')');
                     });
-                });
-            },
-            error:e=>{
-                alert('error');
-            }
-        });
-    }
-    return{onCreate:onCreate};
-})();
-app.date=(function () {
-    var onCreate = function () {
-        setContentView();
-
-    }
-    var setContentView=function () {
-        var selectedMovie= app.session.getSessionData('movie');
-        app.template.reservFixed();
-        $('.option-title.theater').text(app.session.getSessionData('theater'));
-        $('#option-box>ul>li:first-child').css({'background-image':app.session.movie(selectedMovie)});
-        $('#content').append(app.compUI.div('selected-option-box'));
-        $('.option-title.date').click(e=> {
-            e.preventDefault();
-            var date = app.dateCalc.today();
-            //date =[년/월/일/요일] 순으로 들어있음요
-            var thisYear = app.session.init('thisYear',date[0]);
-            var thisMonth = app.session.init('thisMonth',date[1]);
-            var tmrw = app.dateCalc.tomorrow();
-            //tmrw  =[일/요일] 순으로 들어있음요
-            var theDayAfterTmrw = app.dateCalc.theDayAfterTomorrow();
-            //theDayAfterTmrw=[일/요일] 순으로 들어있음요
-            var selectedMovie= app.session.getSessionData('movie');
-            app.template.reservFixed();
-            $('#option-box>ul>li:first-child').css({'background-image':app.session.movie(selectedMovie)});
-            $('.option-title.theater').text(app.session.getSessionData('theater'));
-            $('#content').addClass('date-content').append(app.compUI.div('datepicker'));
-            $('.date-content').append(app.compUI.divC('layer-darker'));
-         /*   $('#container').addClass('layer-darker');
-            $('#option-box>ul>li:last-child').css({'z-index':'500'});*/
-            $('.option-title.date').addClass('lheight-none');
-            $('.option-title.date.lheight-none').html(app.compUI.p('small-font'));
-            $('.small-font').text('오늘');
-            $('.option-title.date').append(app.compUI.p('big-font'));
-            $('.big-font').text(date[1]+'월 '+date[2]+'일('+date[3]+')');
-            $('.date-content').append(app.compUI.div('date-notice'));
-            $('#date-notice').append(app.compUI.i('fa fa-hand-o-right'));
-            $('#date-notice>i').attr('aria-hidden','true');
-            $('#date-notice').append(app.compUI.p('notice-txt'));
-            $('.notice-txt').text('예매가능한 날짜를 선택해주세요.');
-            $('#datepicker').append(app.compUI.ul());
-            $('#datepicker>ul').append(app.compUI.li());
-            $('#datepicker>ul>li:first-child').append(app.compUI.p('year-txt'));
-            $('#datepicker>ul>li:first-child').append(app.compUI.p('month-txt'));
-            $('.year-txt').text(date[0]);
-            $('.month-txt').text(date[1]);
-            $('#datepicker>ul').append(app.compUI.li());
-            $('#datepicker>ul>li:nth-child(2)').attr('id','date01').append(app.compUI.spanC('day-txt today'));
-            $('#datepicker>ul>li:nth-child(2)').append(app.compUI.spanC('date-txt today'));
-            $('.day-txt.today').text(date[3]);
-            $('.date-txt.today').text(date[2]);
-            $('#datepicker>ul').append(app.compUI.li());
-            $('#datepicker>ul>li:nth-child(3)').attr('id','date02').append(app.compUI.spanC('day-txt tmrw'));
-            $('#datepicker>ul>li:nth-child(3)').append(app.compUI.spanC('date-txt tmrw'));
-            $('.day-txt.tmrw').text(tmrw[1]);
-            $('.date-txt.tmrw').text(tmrw[0]);
-            $('#datepicker>ul').append(app.compUI.li());
-            $('#datepicker>ul>li:last-child').attr('id','date03').append(app.compUI.spanC('day-txt after-tmrw'));
-            $('#datepicker>ul>li:last-child').append(app.compUI.spanC('date-txt after-tmrw'));
-            $('.day-txt.after-tmrw').text(theDayAfterTmrw[1]);
-            $('.date-txt.after-tmrw').text(theDayAfterTmrw[0]);
-            $('.option-title.theater').click(e=>{
-                e.preventDefault();
-                app.theater.onCreate();
-            });
-            $('.back-btn').click(e=> {
-                //alert('app.date>뒤로가기');
-                e.preventDefault();
-                app.date.onCreate();
-            });
-            /*        $('.back-btn').click(e=> {
-             e.preventDefault();
-             alert('app.date>뒤로가기');
-             app.date.onCreate();
-             });*/
-            $('#option-box>ul>li:last-child,#datepicker>ul>li:first-child').click('false');
-            $('#datepicker>ul>li').on('click',function (e) {
-                e.preventDefault();
-                var selectedId = $(this).attr('id');
-                app.session.init('selectedDate',$('#'+selectedId+' .date-txt').text());
-                app.session.init('selectedDay',$('#'+selectedId+' .day-txt').text());
-                $('.layer-darker,#datepicker,#date-notice').remove();
-                $('#option-box>ul>li:last-child').html(app.compUI.divC('tag date'));
-                $('.tag.date').text('날짜');
-                $('#option-box>ul>li:last-child').append(app.compUI.divC('option-title date'));
-                $('.option-title.date').text(app.session.getSessionData('thisMonth')+'월 '+app.session.getSessionData('selectedDate')+'일 '+'('+app.session.getSessionData('selectedDay')+')');
-                $('#content').append(app.compUI.div('selected-options'));
-                $('#selected-options').append(app.compUI.div('selected-theater'));
-                $('#selected-theater').text(app.session.getSessionData('theater'));
-                $('#selected-options').append(app.compUI.div('timetable-box'));
-                $('#timetable-box').append(app.compUI.divC('screen-box'));
-                $('.screen-box').append(app.compUI.spanC('screen-num'));
-                $('.screen-num').text('3관');
-                $('.screen-box').append(app.compUI.spanC('total-seats'));
-                $('.total-seats').text('총 224석');
-                $('#timetable-box').append(app.compUI.divC('schedule-box'));
-                $('.timetable-box').append(app.compUI.divC('schedule-box'));
-                $('.schedule-box').append(app.compUI.ul());
-                var i,j;
-                for(i=0;i<1;i++){
-                    $('.schedule-box>ul').append(app.compUI.liC('schedule0'+(i+1)));
-                    for(j=0;j<1;j++){
-                        $('.schedule0'+(i+1)).append(app.compUI.divC('bTime'));
-                        $('.schedule0'+(i+1)).append(app.compUI.divC('eTime'));
-                        $('.schedule0'+(i+1)).append(app.compUI.divC('aSeat'));
-                    }
+                }else{
+                    $('.finish-btn').click('false');
                 }
-                $('.schedule01 .bTime').text('16:20');
-                $('.schedule01 .eTime').text('~18:31');
-                $('.schedule01 .aSeat').text('47석');
-
-                $('.schedule-box>ul>li').on('click',function () {
-                    var selectedTime = $(this).attr('class');
-                    app.session.init('beginTime',$('.'+selectedTime+' .bTime').text());
-                    app.session.init('endTime',$('.'+selectedTime+' .eTime').text());
-                    app.seat.onCreate();
-                });
-/*                var schedules = new Array();
-                schedules[0] = new Object();
-                schedules[1] = new Object();
-                schedules[2] = new Object();
-
-                schedules[0]['bTime']='18:10';
-                schedules[0]['eTime']='~20:09';
-                schedules[0]['aSeat']='217석';
-
-                schedules[1]['bTime']='20:30';
-                schedules[1]['eTime']='~22:29';
-                schedules[1]['aSeat']='221석';
-
-                schedules[2]['bTime']='22:50';
-                schedules[2]['eTime']='~24:49';
-                schedules[2]['aSeat']='200석';
-                var scheduleBox = '';
-                var scheduleListHTML = '';
-                $.each(schedules,(i,o)=>{
-                    scheduleBox+=
-                   $.each(o,(k,v)=>{
-                       scheduleListHTML += '<li id="time0"'+i+1 +'>'+o.bTime+'</li>'
-                       scheduleListHTML += '<li id="time0"'+i+1 +'>'+o.eTime+'</li>'
-                       scheduleListHTML += '<li id="time0"'+i+1 +'>'+o.aSeat+'</li>'
-                   });
-                });*/
-
-
+            });
+            $('.close-btn').click(e=>{
+                e.preventDefault();
+                alert('선택영화 이미지'+app.session.getSessionData('img'));
+                app.reservation.onCreate();
             });
         });
+        $('.option-title.date').on('click',function (e) {
+                e.preventDefault();
+                if($(this).hasClass('date-select')){
+                    $('#header-left').removeClass('go-main-btn1').addClass('back-btn');
+                    $('#datepicker,.layer-darker').show();
+                    var date = app.dateCalc.today();
+                    //date =[년/월/일/요일] 순으로 들어있음요
+                    var thisYear = app.session.init('thisYear',date[0]);
+                    var thisMonth = app.session.init('thisMonth',date[1]);
+                    var tmrw = app.dateCalc.tomorrow();
+                    //tmrw  =[일/요일] 순으로 들어있음요
+                    var theDayAfterTmrw = app.dateCalc.theDayAfterTomorrow();
+                    //theDayAfterTmrw=[일/요일] 순으로 들어있음요
+                    $('.option-title.date').addClass('lheight-none');
+                    $('.option-title.date.lheight-none').html(app.compUI.p('small-font'));
+                    $('.small-font').text('오늘');
+                    $('.option-title.date').append(app.compUI.p('big-font'));
+                    $('.big-font').text(date[1]+'월 '+date[2]+'일('+date[3]+')');
+                    $('.rsrv-content').append(app.compUI.div('date-notice'));
+                    $('#date-notice').append(app.compUI.i('fa fa-hand-o-right'));
+                    $('#date-notice>i').attr('aria-hidden','true');
+                    $('#date-notice').append(app.compUI.p('notice-txt'));
+                    $('.notice-txt').text('예매가능한 날짜를 선택해주세요.');
+                    $('#datepicker').append(app.compUI.ul());
+                    $('#datepicker>ul').append(app.compUI.li());
+                    $('#datepicker>ul>li:first-child').append(app.compUI.p('year-txt'));
+                    $('#datepicker>ul>li:first-child').append(app.compUI.p('month-txt'));
+                    $('.year-txt').text(date[0]);
+                    $('.month-txt').text(date[1]);
+                    $('#datepicker>ul').append(app.compUI.li());
+                    $('#datepicker>ul>li:nth-child(2)').attr('id','date01').append(app.compUI.spanC('day-txt today'));
+                    $('#datepicker>ul>li:nth-child(2)').append(app.compUI.spanC('date-txt today'));
+                    $('.day-txt.today').text(date[3]);
+                    $('.date-txt.today').text(date[2]);
+                    $('#datepicker>ul').append(app.compUI.li());
+                    $('#datepicker>ul>li:nth-child(3)').attr('id','date02').append(app.compUI.spanC('day-txt tmrw'));
+                    $('#datepicker>ul>li:nth-child(3)').append(app.compUI.spanC('date-txt tmrw'));
+                    $('.day-txt.tmrw').text(tmrw[1]);
+                    $('.date-txt.tmrw').text(tmrw[0]);
+                    $('#datepicker>ul').append(app.compUI.li());
+                    $('#datepicker>ul>li:last-child').attr('id','date03').append(app.compUI.spanC('day-txt after-tmrw'));
+                    $('#datepicker>ul>li:last-child').append(app.compUI.spanC('date-txt after-tmrw'));
+                    $('.day-txt.after-tmrw').text(theDayAfterTmrw[1]);
+                    $('.date-txt.after-tmrw').text(theDayAfterTmrw[0]);
+                    $('#option-box>ul>li:last-child,#datepicker>ul>li:first-child').click('false');
+                    $('#datepicker>ul>li').on('click',function (e) {
+                        e.preventDefault();
+                        $('.back-btn').click(e=>{
+                            e.preventDefault();
+                            app.main.onCreate();
+                        });
+                        var selectedId = $(this).attr('id');
+                        app.session.init('selectedDate',$('#'+selectedId+' .date-txt').text());
+                        app.session.init('selectedDay',$('#'+selectedId+' .day-txt').text());
+                        $('.layer-darker,#datepicker,#date-notice').remove();
+                        $('#option-box>ul>li:last-child').html(app.compUI.divC('tag date'));
+                        $('.tag.date').text('날짜');
+                        $('#option-box>ul>li:last-child').append(app.compUI.divC('option-title date'));
+                        $('.option-title.date').text(app.session.getSessionData('thisMonth')+'월 '+app.session.getSessionData('selectedDate')+'일 '+'('+app.session.getSessionData('selectedDay')+')');
+
+                        $('.rsrv-content').append(app.compUI.div('selected-options'));
+                        $('#selected-options').append(app.compUI.div('selected-theater'));
+                        $('#selected-theater').text(app.session.getSessionData('theater'));
+                        $('#selected-options').append(app.compUI.div('timetable-box'));
+                        $('#timetable-box').append(app.compUI.divC('screen-box'));
+                        $('.screen-box').append(app.compUI.spanC('screen-num'));
+                        $('.screen-num').text('3관');
+                        $('.screen-box').append(app.compUI.spanC('total-seats'));
+                        $('.total-seats').text('총 224석');
+                        $('#timetable-box').append(app.compUI.divC('schedule-box'));
+                        $('.schedule-box').append(app.compUI.ul());
+                        app.ajaxList.schedule();
+                        $('.schedule-box>ul>li').on('click',function () {
+                            var selectedTime = $(this).attr('class');
+                            app.session.init('beginTime',$('.'+selectedTime+' .bTime').text());
+                            app.session.init('endTime',$('.'+selectedTime+' .eTime').text());
+                            app.seat.onCreate();
+                        });
+                    });
+                    $('.back-btn').click(e=>{
+                        e.preventDefault();
+                        $('#datepicker,.layer-darker').hide();
+                        app.reservation.onCreate();
+                        $('.option-title.date').addClass('date-select');
+                        $('.option-title.theater').text(app.session.getSessionData('theater'));
+                        var date = app.dateCalc.today();
+                        //date =[년/월/일/요일] 순으로 들어있음요
+                        var thisYear = app.session.init('thisYear',date[0]);
+                        var thisMonth = app.session.init('thisMonth',date[1]);
+                        $('.option-title.date').addClass('lheight-none');
+                        $('.option-title.date.lheight-none').html(app.compUI.p('small-font'));
+                        $('.small-font').text('오늘');
+                        $('.option-title.date').append(app.compUI.p('big-font'));
+                        $('.big-font').text(date[1]+'월 '+date[2]+'일('+date[3]+')');
+                    });
+                }else{
+                    alert('영화관 먼저 선택해주세요.');
+                }
+        });
     }
+    var setContentView = function () {
+        $('body').html(app.compUI.div('wrapper'));
+        app.template.header();
+        //예매창 헤더
+        $('header').addClass('rsrv-header');
+        $('#header-left').addClass('go-main-btn1');
+        $('.go-main-btn1').append(app.compUI.i('fa fa-angle-left'));
+        $('#header-box>span>i').attr('aria-hidden','true');
+        $('#header-title').addClass('header-title-txt1');
+        $('.header-title-txt1').text('영화별 예매');
+        $('.rsrv-header').show();
+        //영화관선택 헤더
+
+        $('#wrapper').append(app.compUI.div('container'));
+        //예매창 컨텐트
+        app.template.reservation();
+        $('.rsrv-content').show();
+
+        //영화관선택 컨텐트
+        app.template.theater();
+
+        //날짜선택 컨텐트
+        app.template.date();
+    };
     return {onCreate:onCreate};
 })();
 app.seat=(function () {
@@ -415,8 +335,10 @@ app.seat=(function () {
         $('#header-box>span>i').attr('aria-hidden','true');
         $('#header-title').addClass('header-title-txt');
         $('.header-title-txt').text('좌석선택');
-        app.template.body('seat-container','seat-content');
-        $('#content').append(app.compUI.div('seat-box'));
+        $('#wrapper').append(app.compUI.div('container'));
+        $('#container').append(app.compUI.divC('seat-container'));
+        $('.seat-container').append(app.compUI.divC('seat-content'));
+        $('.seat-content').append(app.compUI.div('seat-box'));
         $('#seat-box').append(app.compUI.div('screen'));
         $('#screen').text('SCREEN');
         $('#seat-box').append(app.compUI.div('seats'));
@@ -569,7 +491,26 @@ app.complete =(()=>{
     }
     return {onCreate:onCreate}
 })();
+app.appendList={
+    main:x=>{
+        $('#title').text(x.movieTitle);
+        $('#rate').text(x.runningTime);
+        $('#genre').text(x.genre);
+        $('#img-box').css('background-image','url('+x.image +')')
+    },
+    movie:(x,i)=>{
+        var movieListHTML='';
+        movieListHTML+='<li id="movie0'+(i+1)+'">'+x.movieTitle+'</li>';
+        $('#movie-list>ul').append(movieListHTML);
+    },
+    theater :(x,i)=>{
+        var townListHTML='';
+        townListHTML+='<li id="town0'+(i+1)+'">'+x.officename+'</li>';
+        $('#region-town>ul').append(townListHTML);
+    },
+    quantity :()=>{}
 
+};
 app.dateCalc={
     today:()=>{
        var week =new Array('일','월','화','수','목','금','토');
@@ -621,47 +562,9 @@ app.template={
         $('#header-box').append(app.compUI.span('header-title'));
         $('#header-box').append(app.compUI.span('header-right'));
     },
-    body :(x,y)=>{
-        $('#wrapper').append(app.compUI.div('container'));
-        $('#container').addClass(x);
-        $('#container').append(app.compUI.div('content'));
-        $('#content').addClass(y);
-    },
-    theater:()=>{
-        $('body').html(app.compUI.div('wrapper'));
-        app.template.header();
-        $('#header-left').addClass('close-btn');
-        $('.close-btn').append(app.compUI.i('fa fa-times'));
-        $('#header-box>span>i').attr('aria-hidden','true');
-        $('#header-title').addClass('header-title-txt');
-        $('.header-title-txt').text('영화관 선택');
-        $('#header-right').addClass('finish-btn');
-        $('.finish-btn').text('선택완료');
-        app.template.body('theater-container','theater-content');
-        $('.theater-content').html(app.compUI.div('category-box'));
-        $('#category-box').append(app.compUI.ul());
-        $('#category-box>ul').append(app.compUI.li());
-        $('#category-box>ul>li:first-child').text('지역별').addClass('active');
-        $('#category-box>ul').append(app.compUI.li());
-        $('#category-box>ul>li:last-child').text('특별관');
-        $('.theater-content').append(app.compUI.div('region-box'));
-        $('#region-box').append(app.compUI.div('region-city'));
-        $('#region-city').append(app.compUI.ul());
-        $('#region-city>ul').append(app.compUI.li());
-        $('#region-city>ul>li').text('서울').addClass('active');
-        $('#region-box').append(app.compUI.div('region-town'));
-        $('#region-town').append(app.compUI.ul());
-    },
-    reservFixed :()=>{
-        $('body').html(app.compUI.div('wrapper'));
-        app.template.header();
-        $('#header-left').addClass('back-btn');
-        $('.back-btn').append(app.compUI.i('fa fa-angle-left'));
-        $('#header-box>span>i').attr('aria-hidden','true');
-        $('#header-title').addClass('header-title-txt');
-        $('.header-title-txt').text('영화별 예매');
-        app.template.body('rsrv-container','rsrv-content');
-        $('#content').html(app.compUI.div('option-box'));
+    reservation:()=>{
+        $('#container').append(app.compUI.divC('rsrv-content'));
+        $('.rsrv-content').html(app.compUI.div('option-box'));
         $('#option-box').append(app.compUI.ul());
         $('#option-box>ul').append(app.compUI.li());
         $('#option-box>ul>li:first-child').append(app.compUI.divC('tag movie'));
@@ -677,30 +580,121 @@ app.template={
         $('.tag.date').text('날짜');
         $('#option-box>ul>li:last-child').append(app.compUI.divC('option-title date'));
         $('.option-title.date').text('날짜 선택');
-
+        var movieImg=app.session.getSessionData('img');
+        $('#option-box>ul>li:first-child').css({'background-image':'url('+movieImg+')'});
+    },
+    theater:()=>{
+        $('#container').append(app.compUI.divC('theater-content'));
+        $('.theater-content').html(app.compUI.div('category-box'));
+        $('#category-box').append(app.compUI.ul());
+        $('#category-box>ul').append(app.compUI.li());
+        $('#category-box>ul>li:first-child').text('지역별').addClass('active');
+        $('#category-box>ul').append(app.compUI.li());
+        $('#category-box>ul>li:last-child').text('특별관');
+        $('.theater-content').append(app.compUI.div('region-box'));
+        $('#region-box').append(app.compUI.div('region-city'));
+        $('#region-city').append(app.compUI.ul());
+        $('#region-city>ul').append(app.compUI.li());
+        $('#region-city>ul>li').text('서울').addClass('active');
+        $('#region-box').append(app.compUI.div('region-town'));
+        $('#region-town').append(app.compUI.ul());
+        app.ajaxList.office();
+    },
+    date:()=>{
+        $('.rsrv-content').append(app.compUI.div('datepicker'));
+        $('.rsrv-content').append(app.compUI.divC('layer-darker'));
     }
 };
-app.cookie={
-    setCookie:(k,v)=>{
-        document.cookie = k+"=" +v;
-    },
-    getCookie:k=>{
-        var x = k+ "=";
-        var i = 0;
-        var arr= document.cookie.split(';');
-        for(i=0;i<arr.length;i++){
-            var j = arr[i];
-            while(j.charAt(0)==''){
-                j=j.substring(1,j.length)
+app.ajaxList={
+    main:x=>{
+        $.ajax({
+            async : false,
+            url : 'json/movie.json',
+            type: 'post',
+            dataType:'json',
+            success:d=>{
+                $.each(d,(i,o)=>{
+                    if(x === d[i].movieTitle){
+                        var selectedMovie = d[i];
+                        app.appendList.main(selectedMovie);
+                        app.session.movie(selectedMovie);
+                    }
+                });
+            },
+            error:e=>{
+                alert('error');
             }
-            if(j.indexOf(x)==0){
-                return j.substring(x.length,j.length);
-            }
-            return null;
-        }
+        });
     },
-    removeCookie: k=>{
-
+    movie:()=>{
+        $.ajax({
+            async : false,
+            url:'json/movie.json',
+            type: 'post',
+            dataType:'json',
+            success:d=>{
+                var list=d;
+                $.each(list,(i,o)=>{
+                    var movie = list[i];
+                    app.appendList.movie(movie,i);
+                });
+            },
+            error:e=>{
+                alert('error');
+            }
+        });
+    },
+    office:()=>{
+        $.ajax({
+            async : false,
+            url:'json/office.json',
+            type: 'post',
+            dataType:'json',
+            success:d=>{
+                var list=d;
+                $.each(list,(i,o)=>{
+                    var office = list[i];
+                    app.appendList.theater(office,i);
+                });
+            },
+            error:e=>{
+                alert('error');
+            }
+        });
+    },
+    schedule:()=>{
+        $.ajax({
+            async : false,
+            url : 'json/movietime.json',
+            type: 'post',
+            dataType:'json',
+            success:d=>{
+                var scheduleHTML='';
+                var j;
+                $.each(d,(i,o)=>{
+                    scheduleHTML += '<li class="schedule0'+(i+1)+'">'
+                    for(j=0;j<1;j++){
+                        scheduleHTML +='<div class="bTime schedule0'+(i+1)+'">'+d[i].startTime+'</div>'
+                        scheduleHTML +='<div class="eTime schedule0'+(i+1)+'">~'+d[i].endTime+'</div>'
+                        scheduleHTML +='<div class="aSeat schedule0'+(i+1)+'">47석</div>'
+                    }
+                    scheduleHTML +='</li>'
+                });
+                $('.schedule-box>ul').append(scheduleHTML);
+            },
+            error:e=>{
+                alert('error');
+            }
+        });
+    }
+};
+app.valid ={
+    isName : x=>{
+        var name_regex = /^[가-힣a-zA-Z]*$/;
+        return name_regex.test(x)?"yes":"no";
+    },
+    isNumber : x=>{
+        return typeof x === 'number' && isFinite(x);
     }
 };
 app.compUI = {
@@ -730,47 +724,38 @@ app.compUI = {
     liC:x=>{return $('<li/>', {class:x})}
 };
 app.session = {
+    //movie: 영화제목 , img: 영화이미지, theater: 극장,
     init :(k,v)=>{
         sessionStorage.setItem(k,v);
     },
     getSessionData : k=>{
-      return sessionStorage.getItem(k);
+        return sessionStorage.getItem(k);
     },
-movie:x=>{
-    var imgURL;
-    $.ajax({
-        async : false,
-        url:'json/movie.json',
-        type: 'post',
-        dataType:'json',
-        success:d=>{
-                var arr=d;
-                switch(x){
-                    case "매트릭스":
-                        imgURL= 'url('+d[0].poster+')';
-                        break;
-                    case "인셉션":
-                        imgURL= 'url('+d[1].poster+')';
-                        break;
-                    case "소셜네트워크":
-                        imgURL= 'url('+d[2].poster+')';
-                        break;
-                }
-            },
-            error:e=>{
-                alert('error');
-            }
-        });
-    return imgURL
+    movie:x=>{
+        app.session.init('img',x.image);
     }
 };
-app.valid ={
-    isName : x=>{
-        var name_regex = /^[가-힣a-zA-Z]*$/;
-        return name_regex.test(x)?"yes":"no";
+app.cookie={
+    setCookie:(k,v)=>{
+        document.cookie = k+"=" +v;
     },
-    isNumber : x=>{
-        return typeof x === 'number' && isFinite(x);
+    getCookie:k=>{
+        var x = k+ "=";
+        var i = 0;
+        var arr= document.cookie.split(';');
+        for(i=0;i<arr.length;i++){
+            var j = arr[i];
+            while(j.charAt(0)==''){
+                j=j.substring(1,j.length)
+            }
+            if(j.indexOf(x)==0){
+                return j.substring(x.length,j.length);
+            }
+            return null;
+        }
+    },
+    removeCookie: k=>{
+
     }
 };
 (function () {

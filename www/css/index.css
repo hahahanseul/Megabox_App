@@ -108,7 +108,10 @@ ul{
     position:relative;
     background-color:white;
 }
-
+#container{
+    width: 100%;
+    height:calc(100% - 44px);
+}
 /*header*/
 header {
     width:100%;
@@ -170,7 +173,7 @@ header {
     margin-left:7px;
 }
 /*reservation*/
-.back-btn>i {
+.go-main-btn1>i, .back-btn>i {
     font-size:25px;
 }
 /*member*/
@@ -271,11 +274,16 @@ header {
     border-right:1px solid #ccc;
 }
 /*Reservation*/
+.rsrv-header{
+    display:none;
+}
 .rsrv-container{
     width: 100%;
     height:calc(100% - 44px);
 }
 .rsrv-content{
+    display:none;
+    position: relative;
     height:100%;
 }
 #option-box>ul{
@@ -335,12 +343,20 @@ header {
     padding: 5px;
     font-size: 10px;
 }
+.finish-btn.active{
+    color: #503396;
+    border:1px solid #503396 ;
+}
 /*theater*/
+.theater-header{
+    display: none;
+}
 .theater-container{
     width: 100%;
     height:calc(100% - 44px);
 }
 .theater-content{
+    display:none;
     height:100%;
 }
 #category-box{
@@ -354,10 +370,10 @@ header {
 }
 #category-box>ul>li{
     display: inline-block;
-width: 49.9%;
-height: 40px;
-line-height: 40px;
-font-weight:bold;
+    width: 49.9%;
+    height: 40px;
+    line-height: 40px;
+    font-weight:bold;
 }
 #category-box>ul>li.active{
     border-bottom: 2px solid #503396;
@@ -418,6 +434,7 @@ font-weight:bold;
 }
 /*date*/
 .layer-darker{
+    display:none;
     position: absolute;
     width: 66.6%;
     height: 100%;
@@ -433,12 +450,10 @@ font-weight:bold;
     top:50%;
     transform: translateY(-50%);
 }
-.date-content{
-    position:relative;
-}
 #datepicker{
+   display: none;
     position: absolute;
-    top: 0px;
+    top: 0;
     right: 0px;
     width: 33.5%;
     height: 100%;
@@ -501,7 +516,7 @@ font-weight:bold;
     margin:10px;
 }
 .notice-txt {
-    font-size:10px;
+    font-size:11px;
 }
 #selected-options{
     width:100%;

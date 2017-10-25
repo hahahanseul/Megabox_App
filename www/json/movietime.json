@@ -1,12 +1,12 @@
 [{
-  "time_seq":"4",
-  "starttime":"1",
-  "endtime":"1",
-  "screen_seq":"1"
+  "timeSeq":"1",
+  "startTime":"16:15",
+  "endTime":"18:40",
+  "screenSeq":"1"
 },
   {
-    "time_seq":"5",
-    "starttime":"1",
-    "endtime":"1",
-    "screen_seq":"1"
+    "timeSeq":"2",
+    "startTime":"17:00",
+    "endTime":"19:01",
+    "screenSeq":"2"
   }]

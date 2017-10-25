@@ -1,14 +1,14 @@
 [{
   "screeningnumber":"1",
-  "movie_title":"매트릭스",
-  "times":"4",
-  "day":"10/22",
-  "time_seq":"4"
+  "movie_title":"그것",
+  "times":"135분",
+  "day":"20171023",
+  "time_seq":"1"
 },
   {
     "screeningnumber":"2",
-    "movie_title":"인셉션",
-    "times":"2",
-    "day":"10/15",
-    "time_seq":"5"
+    "movie_title":"범죄도시",
+    "times":"121분",
+    "day":"20171023",
+    "time_seq":"2"
   }]

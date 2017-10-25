@@ -3,6 +3,27 @@
   "area":"서울"
 },
   {
+    "officename":"강남대로(씨티)",
+    "area":"서울"
+ },
+  {
+    "officename":"동대문",
+    "area":"서울"
+  },
+  {
+    "officename":"마곡",
+    "area":"서울"
+  },
+  {
     "officename":"목동",
     "area":"서울"
-  }]
+  },
+  {
+    "officename":"상봉",
+    "area":"서울"
+  },
+  {
+    "officename":"센트럴",
+    "area":"서울"
+  }
+]

@@ -1,10 +1,20 @@
 [{
-  "screen_seq":"2",
-  "officename":"1",
+  "screen_seq":"1",
+  "officename":"강남",
   "screen":"1"
 },
   {
-    "screen_seq":"1",
-    "officename":"1",
+    "screen_seq":"2",
+    "officename":"강남",
+    "screen":"2"
+  },
+  {
+    "screen_seq":"3",
+    "officename":"강남",
+    "screen":"3"
+  },
+  {
+    "screen_seq":"4",
+    "officename":"강남대로(씨티)",
     "screen":"1"
   }]
