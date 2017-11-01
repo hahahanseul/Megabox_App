@@ -1,14 +1,14 @@
 [{
-  "reservation_number":"",
-  "id":"1",
+  "reservation_number":"1",
+  "id":"d",
   "screeningnumber":"1",
-  "seat_seq":"1",
-  "cancel":"1"
+  "seat_seq":"A1",
+  "cancel":"Y"
 },
   {
-    "reservation_number":"",
-    "id":"1",
+    "reservation_number":"2",
+    "id":"d",
     "screeningnumber":"1",
-    "seat_seq":"1",
-    "cancel":"1"
+    "seat_seq":"C4",
+    "cancel":"Y"
   }]

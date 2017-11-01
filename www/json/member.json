@@ -1,20 +1,18 @@
 [{
-  "id":"hong",
+  "id":"master",
   "password":"1",
-  "name":"홍길동",
-  "birth":"1739-02-21",
-  "address":"한양",
-  "email":"hong@test.com",
+  "name":"관리자",
+  "birth":"0000-00-00",
+  "email":"master@master.com",
   "phone" : "010-1111-1111",
-  "regdate" : "2017-09-26 오전 11:01:29"
+  "regdate" : "2017-09-26 11:01:29.0"
 },
   {
-    "id":"kim",
-    "password":"1",
-    "name":"김한슬",
-    "birth":"1990-02-21",
-    "address":"서울",
-    "email":"kim@test.com",
-    "phone" : "010-1111-1111",
-    "regdate" : "2017-09-26 오전 11:01:29"
+    "id":"jaegun",
+    "password":"1234",
+    "name":"유재건",
+    "birth":"1991-08-13",
+    "email":"gyun831@naver.com",
+    "phone" : "010-9347-8587",
+    "regdate" : "2017-10-25 11:01:29.0"
   }]

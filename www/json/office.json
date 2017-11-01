@@ -1,29 +1,66 @@
-[{
-  "officename":"강남",
-  "area":"서울"
-},
+[
   {
-    "officename":"강남대로(씨티)",
-    "area":"서울"
- },
-  {
-    "officename":"동대문",
-    "area":"서울"
+    "officeName": "강남",
+    "area": "서울"
   },
   {
-    "officename":"마곡",
-    "area":"서울"
+    "officeName": "강남대로(씨티)",
+    "area": "서울"
   },
   {
-    "officename":"목동",
-    "area":"서울"
+    "officeName": "동대문",
+    "area": "서울"
   },
   {
-    "officename":"상봉",
-    "area":"서울"
+    "officeName": "마곡",
+    "area": "서울"
   },
   {
-    "officename":"센트럴",
-    "area":"서울"
+    "officeName": "목동",
+    "area": "서울"
+  },
+  {
+    "officeName": "상봉",
+    "area": "서울"
+  },
+  {
+    "officeName": "센트럴",
+    "area": "서울"
+  },
+  {
+    "officeName": "송파파크하비오",
+    "area": "서울"
+  },
+  {
+    "officeName": "수유",
+    "area": "서울"
+  },
+  {
+    "officeName": "신촌",
+    "area": "서울"
+  },
+  {
+    "officeName": "은평",
+    "area": "서울"
+  },
+  {
+    "officeName": "이수",
+    "area": "서울"
+  },
+  {
+    "officeName": "창동",
+    "area": "서울"
+  },
+  {
+    "officeName": "코엑스",
+    "area": "서울"
+  },
+  {
+    "officeName": "화곡",
+    "area": "서울"
+  },
+  {
+    "officeName": "ARTNINE",
+    "area": "서울"
   }
 ]

@@ -5,12 +5,13 @@
     "director": "타이카 와이티티",
     "actor": "크리스 헴스워스, 마크 러팔로",
     "genre": "SF, 액션, 판타지",
-    "filmRate": "12세관람가",
+    "filmRate": "age_12",
     "contents": "피할 수 없는 세상의 멸망 라그나로크를 막아라!",
     "startDay": "20171025",
     "endDay": "20171225",
     "runningTime": "130분",
-    "image": "http://www.joblo.com/posters/images/full/Thor-Ragnarok-international-poster-1-large.jpg"
+    "image": "http://image2.megabox.co.kr/mop/poster/2017/4D/E63310-9DAD-4A68-91BD-CDCBB8031901.small.jpg",
+    "stealcut": null
   },
   {
     "movieSeq": "2",
@@ -18,12 +19,13 @@
     "director": "강윤성",
     "actor": "마동석, 윤계상",
     "genre": "액션, 범죄",
-    "filmRate": "청소년관람불가",
-    "contents": "2004년 서울… /t 하얼빈에서 넘어와 단숨에 기존 조직들을 장악하고 /t 가장 강력한 세력인 춘식이파 보스 ‘황사장(조재윤 분)’까지 위협하며 /t 도시 일대의 최강자로 급부상한 신흥범죄조직의 악랄한 보스 ‘장첸(윤계상 분)’.",
+    "filmRate": "age_19",
+    "contents": "2004년 서울…  하얼빈에서 넘어와 단숨에 기존 조직들을 장악하고 가장 강력한 세력인 춘식이파 보스 ‘황사장(조재윤 분)’까지 위협하며 도시 일대의 최강자로 급부상한 신흥범죄조직의 악랄한 보스 ‘장첸(윤계상 분)’.",
     "startDay": "20171003",
     "endDay": "20180103",
     "runningTime": "121분",
-    "image": "http://tenasia.hankyung.com/webwp_kr/wp-content/uploads/2017/08/2017082411070214595-768x1100.jpg"
+    "image": "http://image2.megabox.co.kr/mop/poster/2017/46/F8B4A0-0392-4366-8344-9F210B198398.large.jpg",
+    "stealcut": null
   },
   {
     "movieSeq": "3",
@@ -31,12 +33,13 @@
     "director": "대니 캐넌",
     "actor": "애비 코니시, 앤디 가르시아",
     "genre": "스릴러, SF, 액션",
-    "filmRate": "12세관람가",
+    "filmRate": "age_12",
     "contents": "인간이 기후를 조작하면서 시작된 지구의 대재앙을 그린 재난 블록버스터",
     "startDay": "20171019",
     "endDay": "20180211",
     "runningTime": "109분",
-    "image": "http://img1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/liveboard/movie/7a98c1cfd3aa466fa4392dd6bed8445a.JPG"
+    "image": "http://image2.megabox.co.kr/mop/poster/2017/28/5CCD96-6F15-4C2F-8F4E-CF9A9E9CF37D.large.jpg",
+    "stealcut": null
   },
   {
     "movieSeq": "4",
@@ -44,12 +47,13 @@
     "director": "드니 빌뇌브",
     "actor": "라이언 고슬링, 해리슨 포드",
     "genre": "SF",
-    "filmRate": "15세관람가",
+    "filmRate": "age_15",
     "contents": "인간의 통제를 벗어난 리플리컨트를 쫓는 블레이드 러너 ‘K’(라이언 고슬링) 리플리컨트와 자신을 둘러싼 비밀이 존재함을 깨닫고 오래 전 블레이드 러너로 활약했던 ‘릭 데커드’(해리슨 포드)를 찾아 나선다.",
     "startDay": "20171012",
     "endDay": "20180102",
     "runningTime": "163분",
-    "image": "https://extmovie.maxmovie.com/xe/files/attach/images/135/285/997/023/26cb7871a53258faa9fff550a0ec39a3.jpg"
+    "image": "http://image2.megabox.co.kr/mop/poster/2017/BE/406F2B-CE21-4921-97EA-D4EA41BB8EE2.large.jpg",
+    "stealcut": null
   },
   {
     "movieSeq": "5",
@@ -57,12 +61,13 @@
     "director": "이원태",
     "actor": "송승헌, 정민식, 정진영",
     "genre": "드라마",
-    "filmRate": "12세관람가",
+    "filmRate": "age_12",
     "contents": "1896년 황해도 치하포, 청년 김창수가 일본인을 죽이고 체포된다. 그는 재판장에서 국모의 원수를 갚았을 뿐이라고 소리치지만 결국 사형 선고를 받고 인천 감옥소에 수감된다. 일본의 편에 선 감옥소장 강형식은 자신에게 굴복하지 않는 김창수를 갖은 고문으로 괴롭히고 죄수들마저 김창수에게 등을 돌린다.",
     "startDay": "20171029",
     "endDay": "20180301",
     "runningTime": "115분",
-    "image": "http://img.sbs.co.kr/newsnet/etv/upload/2017/09/04/30000578992_700.jpg"
+    "image": "http://image2.megabox.co.kr/mop/poster/2017/D8/E65351-DB7C-494A-A89C-01EF2AFB4CF6.large.jpg",
+    "stealcut": null
   },
   {
     "movieSeq": "6",
@@ -70,12 +75,13 @@
     "director": "황동혁",
     "actor": "이병헌, 김윤석, 박해일, 고수",
     "genre": "드라마, 사극",
-    "filmRate": "15세관람가",
-    "contents": "1636년 인조 14년 병자호란. /t 청의 대군이 공격해오자 임금과 조정은 적을 피해 남한산성으로 숨어든다. /t 추위와 굶주림, 절대적인 군사적 열세 속 청군에 완전히 포위된 상황 /t 대신들의 의견 또한 첨예하게 맞선다.",
+    "filmRate": "age_15",
+    "contents": "1636년 인조 14년 병자호란. 청의 대군이 공격해오자 임금과 조정은 적을 피해 남한산성으로 숨어든다. 추위와 굶주림, 절대적인 군사적 열세 속 청군에 완전히 포위된 상황. 대신들의 의견 또한 첨예하게 맞선다.",
     "startDay": "20171003",
     "endDay": "20180403",
     "runningTime": "139분",
-    "image": "https://extmovie.maxmovie.com/xe/files/attach/images/135/207/654/015/6a306654b8fec3ca42326f3ba51e8d02.jpg"
+    "image": "http://image2.megabox.co.kr/mop/poster/2017/D7/32EA72-3589-4F85-B131-94A199ABE31A.large.jpg",
+    "stealcut": null
   },
   {
     "movieSeq": "7",
@@ -83,12 +89,13 @@
     "director": "해리 클레븐",
     "actor": "엘러너 로웨손",
     "genre": "멜로/로맨스",
-    "filmRate": "청소년관람불가",
+    "filmRate": "age_19",
     "contents": "앞이 보이지 않아 늘 혼자인 소녀 마들렌에게 몸이 투명한 소년 엔젤이 찾아온다.",
     "startDay": "20171112",
     "endDay": "20180501",
     "runningTime": "79분",
-    "image": "https://extmovie.maxmovie.com/xe/files/attach/images/135/702/623/024/439d9f5d350693c2140ee151b487c55e.jpg"
+    "image": "http://image2.megabox.co.kr/mop/poster/2017/9C/1ACF8C-283C-4941-9050-357BCE485010.large.jpg",
+    "stealcut": null
   },
   {
     "movieSeq": "8",
@@ -96,37 +103,40 @@
     "director": "트레이 에드워드 슐츠",
     "actor": "조엘 에저튼, 크리스포터 에봇",
     "genre": "공포(호러)",
-    "filmRate": "15세관람가",
+    "filmRate": "age_15",
     "contents": "의문의 존재를 피해 외딴 숲에 집을 짓고 자신만의 규칙을 만들어 아내와 아들을 돌보는 남자. 어느 날, 한 가족이 그의 집에 은신하고 정체를 알 수 없는 기이한 일들이 시작되면서 점점 광기에 사로잡히는데…",
     "startDay": "20171119",
     "endDay": "20180502",
     "runningTime": "91분",
-    "image": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6012/6012713_sa.jpg;maxHeight=1000;maxWidth=1000"
+    "image": "http://image2.megabox.co.kr/mop/poster/2017/7F/D7393F-2E42-4570-A3E7-9C451F01EED6.large.jpg",
+    "stealcut": null
   },
   {
     "movieSeq": "9",
     "movieTitle": "가을 우체국",
     "director": "임왕태",
-    "actor": "보아, 이학주",
+    "actor": "보아",
     "genre": "멜로/로맨스, 드라마",
-    "filmRate": "12세관람가",
+    "filmRate": "age_12",
     "contents": "꿈 같은 미래를 준비하던 수련은 자신이 인생에 끝에 서 있다는 사실을 알게 된다. 조용히 삶을 정리하고 싶지만 ‘준’ 만은 수련의 뜻대로 되지 않는데……",
     "startDay": "20171019",
     "endDay": "20180224",
     "runningTime": "84분",
-    "image": "https://dvdprime.com/g2/data/cheditor5/1709/mania-done-20170920002132_rxvpwmkg.jpg"
+    "image": "http://image2.megabox.co.kr/mop/poster/2017/BD/EA6A3E-B2C8-4D34-9ADC-C9F1B6D19238.large.jpg",
+    "stealcut": null
   },
   {
     "movieSeq": "10",
-    "movieTitle": "그것",
-    "director": "안드레스 무시에티",
-    "actor": "빌 스카스가드,제이든 리버허",
-    "genre": "공포,드라마",
-    "filmRate": "15세관람가",
-    "contents": "아이들이 사라지는 마을, ‘그것’이 나타났다./t 살인과 실종사건이 이상하게 많이 생기는 데리라는 마을, 비 오는 어느 날 종이배를 들고 나간 동생이 사라졌다. ",
-    "startDay": "20170906",
-    "endDay": "20171101",
-    "runningTime": "135분",
-    "image": "http://img.insight.co.kr/static/2017/07/24/700/x52q3p01m6c2aztoa867.jpg"
+    "movieTitle": "유리정원",
+    "director": "신수원",
+    "actor": "김태훈, 문근영, 서태화",
+    "genre": "드라마, 미스터리",
+    "filmRate": "age_12",
+    "contents": "베스트셀러에 감춰진 충격적인 비밀! ",
+    "startDay": "20171025",
+    "endDay": "20180501",
+    "runningTime": "117분",
+    "image": "http://image2.megabox.co.kr/mop/poster/2017/B7/F585E3-B7A3-40AE-82C7-2F305BC5D63B.large.jpg",
+    "stealcut": null
   }
 ]

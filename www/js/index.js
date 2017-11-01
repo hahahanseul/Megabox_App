@@ -23,6 +23,10 @@ var app = {
 app.member=(function () {
     var onCreate =function () {
         setContentView();
+        $('#signup-btn').click(e=>{
+            e.preventDefault();
+            alert('구현되지 않은 기능입니다.');
+        });
         $('#signin-btn').click(e=>{
             e.preventDefault();
             var id = $('#id').val();
@@ -34,11 +38,11 @@ app.member=(function () {
             }
             else if (password === undefined || password ===""){
                 alert('비밀번호를 입력하세요');
-                $('#password').focust();
+                $('#password').focus();
             }
             $.ajax({
                 async : false,
-                url:'json/member.json',   //  ctx + '/member/signin'
+                url:'json/member.json', // ctx + '/member/signin'
                 type: 'post',
                 data: {
                     id:id,
@@ -49,7 +53,7 @@ app.member=(function () {
                     $.each(d,(i,o)=>{
                         if(o.id===id && o.password === password){
                             checkval = true;
-                            alert(id+"")
+                           // alert(id+"님 환영합니다!");
                             return false;
                         }else{
                             checkval = false;
@@ -57,6 +61,7 @@ app.member=(function () {
                     });
                     if(checkval==true){
                         app.main.onCreate();
+                        app.session.init('id',id);
                     }else{
                         alert('FAIL');
                         $('#id').val('');
@@ -75,7 +80,7 @@ app.member=(function () {
         $('.member-container').append(app.compUI.divC('member-content'));
         $('.member-content').append(app.compUI.div('main-img'));
         $('.member-content').append(app.compUI.input('id','text'));
-        $('#id').attr('placeholder','ID를 입력하세요').attr('data-role','none').val('hong');
+        $('#id').attr('placeholder','ID를 입력하세요').attr('data-role','none').val('master');
         $('.member-content').append(app.compUI.input('password','password'));
         $('#password').attr('placeholder','비밀번호를 입력하세요').attr('data-role','none').val('1');
         $('.member-content').append(app.compUI.btn('signin-btn'));
@@ -88,6 +93,10 @@ app.member=(function () {
 app.main = (function () {
     var onCreate = function () {
         setContentView();
+        $('.menu-btn').click(e=>{
+            e.preventDefault();
+            alert('구현되지 않은 기능입니다.');
+        });
         $('#rsrv-btn').click(e=>{
             e.preventDefault();
             if($('#title').text()==='토르:라그나로크'){
@@ -146,6 +155,10 @@ app.main = (function () {
 app.reservation =(function () {
     var onCreate =function () {
         setContentView();
+        $('#category-box>ul>li:nth-child(2)').click(e=>{
+            e.preventDefault();
+            alert('구현되지 않은 기능입니다.');
+        });
         var movieImg=app.session.getSessionData('img');
         $('#option-box>ul>li:first-child').css({'background-image':'url('+movieImg+')'});
         $('.go-main-btn1').click(e=>{
@@ -205,12 +218,13 @@ app.reservation =(function () {
                     $('#datepicker,.layer-darker').show();
                     var date = app.dateCalc.today();
                     //date =[년/월/일/요일] 순으로 들어있음요
-                    var thisYear = app.session.init('thisYear',date[0]);
-                    var thisMonth = app.session.init('thisMonth',date[1]);
+                    var thisYear = date[0];
+                    app.session.init('thisYear',thisYear);
                     var tmrw = app.dateCalc.tomorrow();
-                    //tmrw  =[일/요일] 순으로 들어있음요
+                    //tmrw  =[일/요일/월] 순으로 들어있음요
                     var theDayAfterTmrw = app.dateCalc.theDayAfterTomorrow();
-                    //theDayAfterTmrw=[일/요일] 순으로 들어있음요
+                    //theDayAfterTmrw=[일/요일/월] 순으로 들어있음요
+                    var thisMonth = '';
                     $('.option-title.date').addClass('lheight-none');
                     $('.option-title.date.lheight-none').html(app.compUI.p('small-font'));
                     $('.small-font').text('오늘');
@@ -252,6 +266,25 @@ app.reservation =(function () {
                         var selectedId = $(this).attr('id');
                         app.session.init('selectedDate',$('#'+selectedId+' .date-txt').text());
                         app.session.init('selectedDay',$('#'+selectedId+' .day-txt').text());
+                        if(selectedId === 'date01'){
+                           thisMonth = date[1];
+                        }
+                        else if(selectedId === 'date02'){
+                            if($('#'+selectedId+' .date-txt').text()==='1'){
+                                thisMonth = parseInt(date[1])+1;
+                            }
+                            else{
+                                thisMonth = date[1];
+                            }
+                        }
+                       else if(selectedId == 'date03'){
+                            if($('#'+selectedId+' .date-txt').text()==='1' || $('#'+selectedId+' .date-txt').text()==='2' ){
+                                thisMonth = parseInt(date[1])+1;
+                            } else{
+                                thisMonth = date[1];
+                            }
+                        }
+                        app.session.init('thisMonth',thisMonth);
                         $('.layer-darker,#datepicker,#date-notice').remove();
                         $('#option-box>ul>li:last-child').html(app.compUI.divC('tag date'));
                         $('.tag.date').text('날짜');
@@ -266,7 +299,7 @@ app.reservation =(function () {
                         $('.screen-box').append(app.compUI.spanC('screen-num'));
                         $('.screen-num').text('3관');
                         $('.screen-box').append(app.compUI.spanC('total-seats'));
-                        $('.total-seats').text('총 224석');
+                        $('.total-seats').text('30석');
                         $('#timetable-box').append(app.compUI.divC('schedule-box'));
                         $('.schedule-box').append(app.compUI.ul());
                         app.ajaxList.schedule();
@@ -331,6 +364,16 @@ app.seat=(function () {
         var childTotal = 0;
         var total = 0;
         app.amount.onCreate(adultTotal,childTotal,total);
+        if(total>4){
+            $('.adult.plus').click(e=>{
+                e.preventDefault();
+                alert('최대선택인원 초과라능');
+            });
+            $('.child.plus').click(e=>{
+                e.preventDefault();
+                alert('최대선택인원 초과라능');
+            });
+        }
         $('.back-btn').click(e=>{
             e.preventDefault();
             alert('뒤로버튼');
@@ -346,7 +389,7 @@ app.seat=(function () {
             $('.screen-box').append(app.compUI.spanC('screen-num'));
             $('.screen-num').text('3관');
             $('.screen-box').append(app.compUI.spanC('total-seats'));
-            $('.total-seats').text('총 224석');
+            $('.total-seats').text('총 30석');
             $('#timetable-box').append(app.compUI.divC('schedule-box'));
             $('.schedule-box').append(app.compUI.ul());
             app.ajaxList.schedule();
@@ -391,7 +434,6 @@ app.seat=(function () {
             var selectedSeat = [];
             for(var i=0;i<$('#seats>ul>li.active').length;i++){
                 selectedSeat[i]=arr.substring(2*i,2*i+2);
-                alert('선택된 좌석: '+  selectedSeat[i]);
             }
             app.session.init('price',$('.price-text2').text());
             app.session.init('seat',selectedSeat);
@@ -486,12 +528,12 @@ app.seat=(function () {
 app.amount =(()=>{
     var onCreate=(adultTotal,childTotal,total)=>{
         $('.adult.minus').click(e=>{
+            e.preventDefault();
             if(adultTotal==0){
                 $(this).click('false');
                 alert('인원을 선택해주세요');
                 return false;
             }
-            e.preventDefault();
             adultTotal = adultTotal-1;
             $('.amount.adult').text(adultTotal);
         });
@@ -515,15 +557,15 @@ app.amount =(()=>{
             childTotal = childTotal+1;
             $('.amount.child').text(childTotal);
         });
-
         $('.quantity-content>ul>li:last-child').click(e=>{
-            total=adultTotal+childTotal;
+            total = adultTotal + childTotal;
             if(total==0){
                 alert('인원을 선택해주세요.');
                 return false;
             }
             if(total>4){
                 alert('최대 4인까지 예매가능합니다.');
+                $('.amount.child, .amount.adult').text('0');
                 return false;
             }
             if(total=>1 && total <=4){
@@ -556,20 +598,58 @@ app.payment =(function (){
                 alert('구매정보를 입력해주세요!');
             }
             else{
-                if(app.valid.isName($('#pay-name').val())==="yes"){
-                    if(app.valid.isNumber($('#pay-price').val()*1)){
-                        app.complete.onCreate();
+                var id=app.session.getSessionData('id');
+                $.ajax({
+                    async : false,
+                    url:'json/member.json', // ctx + '/member/payment'
+                    type: 'post',
+                    data: {
+                        id:id
+                    },
+                    dataType:'json',
+                    success:d=>{
+                        $.each(d,(i,o)=>{
+                            d[i].id===id;
+                            var list = d[i];
+                            if(list.email===$('#pay-name').val()){
+                                if(app.valid.isNumber($('#pay-price').val()*1)){
+                                    if($('#pay-price').val().toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")===app.session.getSessionData('price')){
+                                        app.complete.onCreate();
+/*                                      var movieTitle = app.session.getSessionData('movie');
+                                        $.ajax({
+                                            async : false,
+                                            url:'json/member.json', // ctx + '/make/reservation'
+                                            type: 'post',
+                                            data: {
+                                                id:id
+                                            },
+                                            dataType:'json',
+                                            success:d=>{},
+                                            error:e=>{
+                                                alert('error');
+                                            }
+                                        });*/
+                                    }
+                                    else{
+                                        alert('결제금액이 다릅니다.');
+                                    }
+                                }
+                                else{
+                                    alert('결제금액에는 숫자만 입력 가능합니다.')
+                                    $('#pay-price').val('');
+                                }
+                            }
+                            else{
+                                alert('구매자명을 확인해주세요.')
+                                $('#pay-name').val('');
+                                $('#pay-price').val('');
+                            }
+                        });
+                    },
+                    error:e=>{
+                        alert('error');
                     }
-                    else{
-                        alert('결제금액에는 숫자만 입력 가능합니다.')
-                        $('#pay-price').val('');
-                    }
-                }
-                else{
-                    alert('구매자명을 확인해주세요.')
-                    $('#pay-name').val('');
-                    $('#pay-price').val('');
-                }
+                });
             }
         });
     }
@@ -593,7 +673,8 @@ app.payment =(function (){
         $('#movie-details').append(app.compUI.div('detail-info'));
         $('#detail-info').append(app.compUI.ul());
         var detailHTML = '';
-        var timeInfo = app.session.getSessionData('thisYear')+'-'+app.session.getSessionData('thisMonth')+'-'+app.session.getSessionData('selectedDate')+'('+app.session.getSessionData('selectedDay')+') '+app.session.getSessionData('beginTime');
+        var timeInfo = app.session.getSessionData('thisYear')+'-'+app.session.getSessionData('thisMonth')
+            +'-'+app.session.getSessionData('selectedDate')+'('+app.session.getSessionData('selectedDay')+') '+app.session.getSessionData('beginTime');
         var theaterInfo = app.session.getSessionData('theater');
         var tickets;
         if(app.session.getSessionData('adult')!=0){
@@ -614,7 +695,6 @@ app.payment =(function (){
         detailHTML += '<li>'+tickets+'</li>';
 
         var seatInfo = app.session.getSessionData('seat');
-        alert('좌석 배열  ::' + seatInfo);
         var arr = seatInfo.split(',');
         var row, seatNo;
         var seats ='';
@@ -622,21 +702,20 @@ app.payment =(function (){
             row = arr[i].substr(0,1) + '열';
             seatNo= arr[i].substr(1,1) + '번';
             seats += row+seatNo +"  ";
-            alert('선택한 좌석 열과 번호     :::' + seats );
         }
         detailHTML += '<li>'+seats+'</li>'
         $('#detail-info>ul').append(detailHTML);
 
         $('.payment-content').append(app.compUI.div('payment-form'));
         $('#payment-form').append(app.compUI.div('payment-title'));
-        $('#payment-title').text('구매자명 + 금액');
+        $('#payment-title').text('구매자메일 + 금액');
         $('#payment-form').append(app.compUI.div('payment-content'));
         $('#payment-content').append(app.compUI.div('input-box'));
         $('#input-box').append(app.compUI.div('name-box'));
         $('#name-box').append(app.compUI.spanC('payment-txt'));
-        $('#name-box>span').text('구매자명');
+        $('#name-box>span').text('구매자메일');
         $('#name-box').append(app.compUI.input('pay-name','text'));
-        $('#pay-name').attr('placeholder','한글 또는 영문(대소문자 구분)').attr('data-role','none');
+        $('#pay-name').attr('placeholder','이메일을 입력해주세요').attr('data-role','none');
         $('#input-box').append(app.compUI.div('price-box'));
         $('#price-box').append(app.compUI.spanC('payment-txt'));
         $('#price-box>span').text('결제금액');
@@ -666,10 +745,11 @@ app.complete =(()=>{
     };
     var setContentView =()=>{
         $('body').html(app.compUI.div('wrapper'));
-        app.template.body('complete-container','complete-content');
-        $('#content').append(app.compUI.div('complete-msg'));
+        $('#wrapper').html(app.compUI.div('complete-container'));
+        $('#complete-container').append(app.compUI.div('complete-content'));
+        $('#complete-content').append(app.compUI.div('complete-msg'));
         $('#complete-msg').text('결제가 완료되었습니다.');
-        $('#content').append(app.compUI.div('go-main-btn'));
+        $('#complete-content').append(app.compUI.div('go-main-btn'));
         $('#go-main-btn').text('메인으로');
 
     }
@@ -689,7 +769,7 @@ app.appendList={
     },
     theater :(x,i)=>{
         var townListHTML='';
-        townListHTML+='<li id="town0'+(i+1)+'">'+x.officename+'</li>';
+        townListHTML+='<li id="town0'+(i+1)+'">'+x.officeName+'</li>';
         $('#region-town>ul').append(townListHTML);
     },
     quantity :()=>{}
@@ -703,28 +783,51 @@ app.dateCalc={
        var month=today.getMonth()+1;
        var day=today.getDate();
        var dayName = week[today.getDay()];
-       var date=new Array(year,month,day,dayName);
+       var date=[year,month,day,dayName];
        return date;
     },
     tomorrow:()=>{
         var week =new Array('일','월','화','수','목','금','토');
         var today=new Date();
+        var month=today.getMonth()+1;
         var day=today.getDate()+1;
         var dayName;
+        var date=[day,dayName];
         if(today.getDay()==6){
             dayName = week[0];
         }
         else{
             dayName = week[today.getDay()+1];
         }
-        var date=new Array(day,dayName);
+        if(month==1||month==3||month==5||month==7||month==8||month==9||month==10||month==12){
+            if(day==32){
+                date[0] = 1;
+                date[1] = dayName;
+            }
+            else{
+                date[0] = day;
+                date[1] = dayName;
+            }
+        }
+        if(month==4||month==6||month==9||month==11) {
+            if(day==31){
+                date[0] = 1;
+                date[1] = dayName;
+            }
+            else{
+                date[0] = day;
+                date[1] = dayName;
+            }
+        }
         return date;
     },
     theDayAfterTomorrow:()=>{
         var week =new Array('일','월','화','수','목','금','토');
         var today=new Date();
+        var month=today.getMonth()+1;
         var day=today.getDate()+2;
         var dayName;
+        var date=[day,dayName];
         if(today.getDay()==5){
             dayName = week[0];
         }
@@ -734,20 +837,37 @@ app.dateCalc={
         else{
             dayName = week[today.getDay()+2];
         }
-        var date=new Array(day,dayName);
+        if(month==1||month==3||month==5||month==7||month==8||month==9||month==10||month==12){
+            if(day==32){
+                date[0] = 1;
+                date[1] = dayName;
+            }
+            else if(day==33){
+                date[0] = 2;
+                date[1] = dayName;
+            }
+            else{
+                date[0] = day;
+                date[1] = dayName;
+            }
+        }
+        if(month==4||month==6||month==9||month==11) {
+            if(day==31){
+                date[0] = 1;
+                date[1] = dayName;
+            }
+            else if(day==32){
+                date[0] = 2;
+                date[1] = dayName;
+            }
+            else{
+                date[0] = day;
+                date[1] = dayName;
+            }
+        }
         return date;
     }
 }
-app.selList={
-    toggle:(x,t)=>{
-        if(t==1){
-            $(x).toggleClass('active');
-        }
-        else{
-            $(x).addClass('active');
-        }
-    }
-},
 app.template={
     header :()=>{
         $('#wrapper').append(app.compUI.header());
@@ -815,6 +935,7 @@ app.ajaxList={
                         var selectedMovie = d[i];
                         app.appendList.main(selectedMovie);
                         app.session.movie(selectedMovie);
+                        app.session.movieSeq(selectedMovie);
                     }
                 });
             },
@@ -851,7 +972,9 @@ app.ajaxList={
                 var list=d;
                 $.each(list,(i,o)=>{
                     var office = list[i];
-                    app.appendList.theater(office,i);
+                    if(i<14) {
+                        app.appendList.theater(office,i);
+                    }
                 });
             },
             error:e=>{
@@ -873,7 +996,7 @@ app.ajaxList={
                     for(j=0;j<1;j++){
                         scheduleHTML +='<div class="bTime schedule0'+(i+1)+'">'+d[i].startTime+'</div>'
                         scheduleHTML +='<div class="eTime schedule0'+(i+1)+'">~'+d[i].endTime+'</div>'
-                        scheduleHTML +='<div class="aSeat schedule0'+(i+1)+'">47석</div>'
+                        scheduleHTML +='<div class="aSeat schedule0'+(i+1)+'">30석</div>'
                     }
                     scheduleHTML +='</li>'
                 });
@@ -886,9 +1009,9 @@ app.ajaxList={
     }
 };
 app.valid ={
-    isName : x=>{
-        var name_regex = /^[가-힣a-zA-Z]*$/;
-        return name_regex.test(x)?"yes":"no";
+    isEmail : x=>{
+        var email_regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        return email_regex.test(x)?"yes":"no";
     },
     isNumber : x=>{
         return typeof x === 'number' && isFinite(x);
@@ -931,31 +1054,12 @@ app.session = {
     },
     movie:x=>{
         app.session.init('img',x.image);
+    },
+    movieSeq:x=>{
+        app.session.init('movieSeq',x.movieSeq);
     }
 };
-app.cookie={
-    setCookie:(k,v)=>{
-        document.cookie = k+"=" +v;
-    },
-    getCookie:k=>{
-        var x = k+ "=";
-        var i = 0;
-        var arr= document.cookie.split(';');
-        for(i=0;i<arr.length;i++){
-            var j = arr[i];
-            while(j.charAt(0)==''){
-                j=j.substring(1,j.length)
-            }
-            if(j.indexOf(x)==0){
-                return j.substring(x.length,j.length);
-            }
-            return null;
-        }
-    },
-    removeCookie: k=>{
 
-    }
-};
 (function () {
    app.initialize();
 });

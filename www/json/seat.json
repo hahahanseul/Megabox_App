@@ -1,10 +1,38 @@
 [{
-  "screeningnumber":"121",
-  "seat_name":"1",
-  "yes_no":"1"
+  "screeningnumber":"1",
+  "seat_name":"A1",
+  "type":"seat_normal"
 },
   {
-    "screeningnumber":"33",
-    "seat_name":"1",
-    "yes_no":"1"
-  }]
+    "screeningnumber":"1",
+    "seat_name":"A2",
+    "type":"seat_done"
+  },
+  {
+    "screeningnumber":"1",
+    "seat_name":"A2",
+    "type":"seat_done"
+  },
+  {
+  "screeningnumber":"1",
+  "seat_name":"A2",
+  "type":"seat_done"
+  },
+  {
+  "screeningnumber":"1",
+  "seat_name":"A2",
+  "type":"seat_done"
+  },
+  {
+  "screeningnumber":"1",
+  "seat_name":"A2",
+  "type":"seat_done"
+  },
+  {
+  "screeningnumber":"1",
+  "seat_name":"A2",
+  "type":"seat_done"
+  }
+]
+
+/*A~D열까지만 있음 (광훈님꺼)*/
