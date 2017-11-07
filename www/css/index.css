@@ -914,10 +914,21 @@ footer{
     margin-bottom:15px;
 }
 #go-main-btn{
+     width:40%;
+     margin:0 auto;
+     padding: 10px;
+     background-color: #503396;
+     color:white;
+     font-size:15px;
+ }
+#go-confirm-btn{
     width:40%;
-    margin:0 auto;
+    margin:15px auto 0 auto;
     padding: 10px;
     background-color: #503396;
     color:white;
     font-size:15px;
+}
+.home-btn>i{
+    font-size: 25px;
 }

@@ -20,7 +20,7 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
-app.member=(function () {
+app.member=(()=>{
     var onCreate =function () {
         setContentView();
         $('#signup-btn').click(e=>{
@@ -90,7 +90,7 @@ app.member=(function () {
     };
     return{onCreate:onCreate};
 })();
-app.main = (function () {
+app.main = (()=>{
     var onCreate = function () {
         setContentView();
         $('.menu-btn').click(e=>{
@@ -152,7 +152,7 @@ app.main = (function () {
     };
     return {onCreate:onCreate};
 })();
-app.reservation =(function () {
+app.reservation =(()=>{
     var onCreate =function () {
         setContentView();
         $('#category-box>ul>li:nth-child(2)').click(e=>{
@@ -357,7 +357,7 @@ app.reservation =(function () {
     };
     return {onCreate:onCreate};
 })();
-app.seat=(function () {
+app.seat=(()=>{
     var onCreate = function () {
         setContentView();
         var adultTotal = 0;
@@ -410,13 +410,12 @@ app.seat=(function () {
             e.preventDefault();
             $(this).toggleClass('active');
             var total = app.session.getSessionData('amount');
-            if($('#seats>ul>li.active').length>total){
+            if($('#seats>ul>li.active').length>total) {
                 alert('더 이상 좌석을 선택하실 수 없습니다.' +
-                    '\n(현재 선택 인원 - 일반: '+app.session.getSessionData('adult')+'명 / 청소년: '+app.session.getSessionData('child')+'명)');
+                    '\n(현재 선택 인원 - 일반: ' + app.session.getSessionData('adult') + '명 / 청소년: ' + app.session.getSessionData('child') + '명)');
                 $(this).removeClass('active');
-                return false;
             }
-            if($('#seats>ul>li.active').length==total){
+            else if($('#seats>ul>li.active').length==total){
                 var adult = app.session.getSessionData('adult');
                 var child = app.session.getSessionData('child');
                 var totalPrice = adult * 11000 + child * 10000;
@@ -430,6 +429,12 @@ app.seat=(function () {
         });
         $('#confirm-btn').click(e=>{
             e.preventDefault();
+            var total = app.session.getSessionData('amount');
+            if($('#seats>ul>li.active').length<total){
+                alert('선택인원만큼 좌석을 지정해주세요.' +
+                    '\n(현재 선택 인원 - 일반: ' + app.session.getSessionData('adult') + '명 / 청소년: ' + app.session.getSessionData('child') + '명)');
+                return false;
+            }
             var arr =$('#seats>ul>li.active').text();
             var selectedSeat = [];
             for(var i=0;i<$('#seats>ul>li.active').length;i++){
@@ -453,6 +458,7 @@ app.seat=(function () {
         $('#header-right').addClass('close-btn');
         $('.close-btn').append(app.compUI.i('fa fa-times'));
         $('#header-box>span>i').attr('aria-hidden','true');
+        $('.quantity-header').show();
         $('.quantity-header').show();
         $('#wrapper').addClass('layer-dark');
         $('#wrapper').append(app.compUI.div('container'));
@@ -566,6 +572,8 @@ app.amount =(()=>{
             if(total>4){
                 alert('최대 4인까지 예매가능합니다.');
                 $('.amount.child, .amount.adult').text('0');
+                childTotal = 0;
+                adultTotal =0;
                 return false;
             }
             if(total=>1 && total <=4){
@@ -585,7 +593,7 @@ app.amount =(()=>{
     }
     return {onCreate:onCreate}
 })();
-app.payment =(function (){
+app.payment =(()=>{
     var onCreate=function () {
         setContentView();
         $('.back-btn').click(e=>{
@@ -742,6 +750,10 @@ app.complete =(()=>{
             e.preventDefault();
             app.main.onCreate();
         });
+        $('#go-confirm-btn').click(e=>{
+            e.preventDefault();
+            app.confirm.onCreate();
+        });
     };
     var setContentView =()=>{
         $('body').html(app.compUI.div('wrapper'));
@@ -751,9 +763,37 @@ app.complete =(()=>{
         $('#complete-msg').text('결제가 완료되었습니다.');
         $('#complete-content').append(app.compUI.div('go-main-btn'));
         $('#go-main-btn').text('메인으로');
+        $('#complete-content').append(app.compUI.div('go-confirm-btn'));
+        $('#go-confirm-btn').text('예매내역 확인');
 
     }
     return {onCreate:onCreate}
+})();
+app.confirm =(()=>{
+    var onCreate=()=>{
+        setContentView();
+        $('.home-btn').click(e=>{
+            e.preventDefault();
+            app.main.onCreate();
+        });
+    };
+    var setContentView =()=>{
+        $('body').html(app.compUI.div('wrapper'));
+        app.template.header();
+        $('#header-left').addClass('home-btn');
+        $('.home-btn').append(app.compUI.i('fa fa-home'));
+        $('#header-box>span>i').attr('aria-hidden','true');
+        $('#header-title').text('예매내역 확인');
+        $('#wrapper').append(app.compUI.divC('confirm-container'));
+        $('.confirm-container').append(app.compUI.divC('confirm-content'));
+        $('.confirm-content').append(app.compUI.div('booking-list'));
+        $('#confirm-content').append(app.compUI.ul());
+        $('#confirm-content>ul>li').append(app.compUI.li());
+
+
+
+    };
+    return{onCreate:onCreate}
 })();
 app.appendList={
     main:x=>{
