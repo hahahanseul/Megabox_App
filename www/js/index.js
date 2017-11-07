@@ -42,7 +42,7 @@ app.member=(()=>{
             }
             $.ajax({
                 async : false,
-                url:'json/member.json', // ctx + '/member/signin'
+                url:'http://52.78.230.153:8080/login/member',
                 type: 'post',
                 data: {
                     id:id,
@@ -50,20 +50,12 @@ app.member=(()=>{
                 },
                 dataType:'json',
                 success:d=>{
-                    $.each(d,(i,o)=>{
-                        if(o.id===id && o.password === password){
-                            checkval = true;
-                           // alert(id+"님 환영합니다!");
-                            return false;
-                        }else{
-                            checkval = false;
-                        }
-                    });
-                    if(checkval==true){
-                        app.main.onCreate();
+                    if(d.checkval==="ok"){
                         app.session.init('id',id);
-                    }else{
-                        alert('FAIL');
+                        app.main.onCreate();
+                    }
+                    else{
+                        alert(d.msg);
                         $('#id').val('');
                         $('#password').val('');
                     }
@@ -72,6 +64,7 @@ app.member=(()=>{
                     alert('error');
                 }
             });
+
         });
     };
     var setContentView =function () {
