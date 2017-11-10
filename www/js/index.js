@@ -41,14 +41,14 @@ app.member=(()=>{
                 $('#password').focus();
             }
             $.ajax({
-                async : false,
-                url:'http://52.78.230.153:8080/login/member',
+
+                url:'http://www.seullockholmes.com/login/member',
                 type: 'post',
                 data: {
                     id:id,
                     password:password
                 },
-                dataType:'json',
+                dataType:'text',
                 success:d=>{
                     if(d.checkval==="ok"){
                         app.session.init('id',id);
@@ -64,6 +64,8 @@ app.member=(()=>{
                     alert('error');
                 }
             });
+
+
 
         });
     };
